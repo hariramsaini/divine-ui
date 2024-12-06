@@ -1,4 +1,25 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from './routes'
+import axios from 'axios'
 
-createApp(App).mount('#app')
+
+axios.interceptors.request.use(
+    (config) => {
+        const user = localStorage.getItem("user");
+        //console.warn('user from interceptor:' + user)
+        if (user) {
+
+            console.warn('token from interceptor:' + JSON.parse(user).token)
+            const token = JSON.parse(user).token
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        // Handle request errors
+        return Promise.reject(error);
+    }
+)
+
+createApp(App).use(router).mount('#app')
