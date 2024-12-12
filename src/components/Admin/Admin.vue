@@ -10,8 +10,8 @@
 
         <div class="login">
             <h1>Login</h1>
-            <input type="text" placeholder="Enter username" v-model="login.userName">
-            <input type="password" placeholder="Enter password" v-model="login.userPassword">
+            <input type="text" placeholder="Enter username" v-model.trim="login.userName">
+            <input type="password" placeholder="Enter password" v-model.trim="login.userPassword">
             <button ref="login" v-on:click="loginFun()">Login</button>
         </div>
 
@@ -131,7 +131,27 @@ export default {
     background-color: lightyellow;
 }
 
-@media(max-width: 1200px) {}
+@media(max-width: 1200px) {
+    .container {
+        padding: 10px;
+        margin-bottom: 100px;
+    }
+
+    .login {
+        width: 90%;
+    }
+
+    .login {
+        margin-bottom: 0;
+    }
+
+    h1{
+        margin: 0;
+    }
+    .header{
+        margin-bottom: 5px;
+    }
+}
 
 @media(min-width: 1200px) {}
 </style>

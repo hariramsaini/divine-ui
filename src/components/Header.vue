@@ -3,28 +3,26 @@
         <div class="header">
             <div class="logo">
                 <!--h2 class="title">Divine English Academy Radhakishanpura...</h2-->
-                <img src="@/assets/banner/banner.png" alt="">
+                <router-link to="/" class="link"><img src="@/assets/banner/banner.png" alt=""></router-link>
             </div>
-            <div class="nav-menu-bar" @click="mobileMenu = !mobileMenu">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
+           
+            <div class="nav-menu-bar">
+                <i class="fa fa-bars" aria-hidden="true" @click="mobileMenu = !mobileMenu"></i>
             </div>
             <div class="menu">
                 <router-link to="/" class="link"><i class="fa fa-fw fa-home"></i>Home</router-link>
                 <router-link to="/careers"><i class="fa fa-fw fa-wrench"></i>Careers</router-link>
-                <router-link to="/developers" class="link"><i class="fa fa-fw fa-user"></i>Developers</router-link>
-                <router-link to="/student" class="link">Student</router-link>
-                <router-link to="/admin" class="link">Admin</router-link>
+                <router-link to="/developers" class="link"><i class="fa fa-fw fa-users"></i>Developers</router-link>
+                <router-link to="/student" class="link"><i class="fa fa-fw fa-user"></i>Student</router-link>
             </div>
         </div>
         <div class="nav" v-show="mobileMenu">
             <div class="sidebar">
+                <div class="close-button"><i class="fa fa-window-close" aria-hidden="true" @click="mobileMenu = !mobileMenu"></i></div>
                 <router-link to="/" class="link"><i class="fa fa-fw fa-home"></i>Home</router-link>
                 <router-link to="/careers"><i class="fa fa-fw fa-wrench"></i>Careers</router-link>
-                <router-link to="/developers" class="link"><i class="fa fa-fw fa-user"></i>Developers</router-link>
-                <router-link to="/student" class="link">Student</router-link>
-                <router-link to="/admin" class="link">Admin</router-link>
+                <router-link to="/developers" class="link"><i class="fa fa-fw fa-users"></i>Developers</router-link>
+                <router-link to="/student" class="link"><i class="fa fa-fw fa-user"></i>Student</router-link>
             </div>
         </div>
     </div>
@@ -95,10 +93,28 @@ export default {
         margin-right: 30px;
     }
 
+    
+
+    .nav-menu-bar i {
+        color: white;
+        font-size: 34px;
+    }
+
     .nav {
         display: flex;
         justify-content: flex-end;
         transition: 10s ease;
+    }
+
+    .close-button {
+        display: flex;
+        width: 100%;
+        flex-direction: row-reverse;
+    }
+
+    .close-button i{
+        color: white;
+        font-size:24px
     }
 
     .sidebar {
@@ -110,20 +126,23 @@ export default {
         background-color: #135179;
         overflow-x: hidden;
         padding: 16px;
-        margin-top: 80px;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        z-index: 50;
+        z-index: 500;
     }
 
-    a {
+    .nav a {
         font-size: x-large;
         margin-right: 20px;
         color: white;
         text-decoration: none;
         padding: 20px;
         padding-left: 0;
+    }
+
+    .nav a:hover {
+        color: darkslateblue;
     }
 }
 

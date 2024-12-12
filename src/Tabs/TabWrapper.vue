@@ -35,6 +35,7 @@ export default {
 <style scoped>
 .wrapper-view {
     overflow-y: auto;
+    width: 95%;
     /* Enable vertical scrolling */
     max-height: 590px;
 }

@@ -3,7 +3,7 @@
         <h1>Contact Us</h1>
         <input type="text" placeholder="Enter Student Name" ref="sName" v-model="details.sName">
         <input type="text" placeholder="Father's Name" ref="fName" v-model="details.name">
-        <select name="class" id="class" ref="class"  style="color: gray;" v-model="details.class">
+        <select name="class" id="class" ref="class" style="color: gray;" v-model="details.class">
             <option value="" disabled selected hidden>Select Class</option>
             <option value="Playgroup">Play Group</option>
             <option value="Nursery">Nursery</option>
@@ -127,29 +127,34 @@ input::-webkit-inner-spin-button {
     border-radius: 10px;
 }
 
+.cu-main h1 {
+    color: #3F51B5;
+}
+
 .cu-main input {
     width: 90%;
     height: 35px;
     border-radius: 10px;
-    border: 1px solid blueviolet;
+    border: 1px solid skyblue;
     padding: 5px;
     font-size: x-large;
     margin: 10px;
 }
 
 .cu-main button {
-    width: 90%;
+    width: 100px;
     height: 40px;
-    border-radius: 10px;
-    border: 1px solid blueviolet;
-    padding: 5px;
+    border: 1px solid skyblue;
+    background-color: skyblue;
+    color: black;
     font-size: x-large;
-    margin: 20px;
-    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+    margin: 10px;
 }
 
 .cu-main button:hover {
-    background-color: blueviolet;
+    background-color: darkblue;
     color: white;
 }
 
@@ -157,7 +162,7 @@ input::-webkit-inner-spin-button {
     width: 92%;
     height: 45px;
     border-radius: 10px;
-    border: 1px solid blueviolet;
+    border: 1px solid skyblue;
     padding: 5px;
     font-size: x-large;
     margin: 10px;

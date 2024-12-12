@@ -1,6 +1,6 @@
 <template>
     <div class="footer">
-        <h4>Contact Detail: +91-7737201905 / 01572272529</h4>
+        <h4>Contact Detail: +91-9928580651 / 01572272529</h4>
         <div class="copyright">
             <p>Copy Right @DivineEnglishAcademy</p>
         </div>
@@ -13,6 +13,11 @@
             <div class="insta-logo">
                 <a href="https://www.instagram.com/divineschoolsikar/reels/" target="_blank">
                     <img src="../assets/instagram.svg" alt="" style="width: 40px;">
+                </a>
+            </div>
+            <div class="insta-logo">
+                <a href=" https://wa.me/919928580651" target="_blank">
+                    <img src="../assets/wa-logo.png" alt="" style="width: 30px; border-radius: 100%;">
                 </a>
             </div>
         </div>
@@ -34,7 +39,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin: 10px;
+        bottom: 0;
     }
 
     .footer h4 {
@@ -53,7 +58,6 @@ export default {
         background-color: #27739c;
         display: grid;
         justify-content: space-around;
-        margin: 10px;
         justify-items: center;
     }
 

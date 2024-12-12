@@ -3,7 +3,8 @@
         <div class="header">
             <div class="logo">
                 <!--h2 class="title">Divine English Academy Radhakishanpura...</h2-->
-                <img src="@/assets/banner/banner.png" alt="">
+                <p @click="tab = 'Dashboard'" style="display: contents;"><img src="@/assets/banner/banner.png" alt="">
+                </p>
             </div>
             <div class="search-bar">
                 <input type="text" class="search" ref="sRef" @keyup.enter="searchFun()" @keyup="searchFun()"
@@ -18,7 +19,10 @@
             </div>
 
             <div class="menu">
-                <a href="" @click="logout()">Logout</a>
+                <a href="" @click="logout()">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+            </div>
+            <div class="menu-bar">
+                <i class="fa fa-bars" aria-hidden="true" @click="showNav = !showNav"></i>
             </div>
         </div>
         <div class="nav">
@@ -27,6 +31,18 @@
                 <p @click="tab = 'AdminHome'"><i class="fa fa-fw fa-edit"></i> Front Panel</p>
                 <p @click="tab = 'AdminUm'"><i class="fa fa-fw fa-user"></i> UM</p>
                 <p @click="tab = 'RecycleBin'"><i class="fa fa-fw fa-recycle"></i> BIN</p>
+                <div class="close-button"><i class="fa fa-window-close" aria-hidden="true"
+                        @click="showNav = !showNav"></i></div>
+            </div>
+            <div class="mobile-sidebar" v-show="showNav">
+                <p @click="tab = 'Dashboard'; showNav = !showNav"><i class="fa fa-fw fa-dashboard"></i> Dashboard</p>
+                <p @click="tab = 'AdminHome'; showNav = !showNav"><i class="fa fa-fw fa-edit"></i> Front Panel</p>
+                <p @click="tab = 'AdminUm'; showNav = !showNav"><i class="fa fa-fw fa-user"></i> UM</p>
+                <p @click="tab = 'RecycleBin'; showNav = !showNav"><i class="fa fa-fw fa-recycle"></i> BIN</p>
+                <div class="close-button">
+                    <a href="" @click="logout()">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                    <i class="fa fa-window-close" aria-hidden="true" @click="showNav = !showNav"></i>
+                </div>
             </div>
             <div class="view">
                 <Component :is="tab"></Component>
@@ -59,12 +75,13 @@ export default {
             ],
             searchResult: [],
             searchVisible: false,
-            tab: 'Dashboard'
+            tab: 'Dashboard',
+            showNav: true
         }
     },
     created() {
         if (localStorage.getItem('user') == null) {
-            //this.$router.push({ name: 'Admin' })
+            this.$router.push({ name: 'Admin' })
         }
     },
     methods: {
@@ -112,16 +129,43 @@ export default {
     width: 100%;
 }
 
+.close-button {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 20px;
+    width: 170px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.close-button i,a {
+    color: white;
+    font-size: 24px
+}
+
+a{
+    text-decoration: none;
+}
+
 .header {
+    height: 35px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #27739c;
+    padding: 2px;
+}
+
+.logo img {
+    width: 30PX;
+    border-radius: 100px;
 }
 
 .search-bar {
     width: 60%;
-    display: flex;
+    /*display: flex;*/
+    display: none;
     flex-direction: column;
     align-items: center;
 }
@@ -176,22 +220,24 @@ export default {
     font-weight: bold;
 }
 
-.logo img {
-    width: 60PX;
-    border-radius: 100px;
-    padding: 10px;
+.menu-bar {
+    display: none;
+}
+
+.mobile-sidebar {
+    display: none;
 }
 
 .sidebar {
     height: 100%;
-    width: max-content;
+    width: 200px;
     position: fixed;
     top: 0;
     left: 0;
     background-color: #27739c;
     overflow-x: hidden;
     padding-top: 16px;
-    margin-top: 100px;
+    margin-top: 35px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -220,16 +266,7 @@ export default {
     padding: 0px 10px;
 }
 
-/* Add media queries for small screens (when the height of the screen is less than 450px, add a smaller padding and font-size) */
-@media screen and (max-height: 450px) {
-    .sidebar {
-        padding-top: 15px;
-    }
 
-    .sidebar a {
-        font-size: 18px;
-    }
-}
 
 .nav {
     display: flex;
@@ -238,7 +275,64 @@ export default {
 
 .view {
     position: fixed;
-    width: 88%;
+    width: -webkit-calc(100% - 200px);
     z-index: 0;
+}
+
+@media(max-width: 1200px) {
+    .sidebar {
+        display: none;
+    }
+
+    .mobile-sidebar {
+        width: 300px;
+        z-index: 200;
+        position: relative;
+        height: 1000px;
+        padding-top: 0;
+        margin-top: 0;
+        width: 200px;
+        top: 0;
+        left: 0;
+        background-color: #27739c;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* Style sidebar links */
+    .mobile-sidebar p {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 20px;
+        color: #818181;
+        display: block;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    /* Style links on mouse-over */
+    .mobile-sidebar p:hover {
+        color: #f1f1f1;
+    }
+
+    .view {
+        width: -webkit-calc(100%);
+    }
+
+    .menu {
+        display: none;
+    }
+
+    .menu-bar {
+        display: block;
+        padding: 20px;
+    }
+
+    .menu-bar i {
+        color: white;
+        font-size: 24px;
+    }
 }
 </style>

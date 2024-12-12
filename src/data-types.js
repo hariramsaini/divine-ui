@@ -1,4 +1,4 @@
 
-const base_url = 'http://15.235.199.11:9001';
+const base_url = 'https://apigateway.divineacademy.link';
 
 export default base_url;

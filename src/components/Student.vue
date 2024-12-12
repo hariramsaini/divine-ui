@@ -60,15 +60,15 @@ export default {
 }
 
 h1{
-    color: darkblue;
+    color: #3F51B5;;
 }
 
 @media(min-width: 1200px) {
     .student-container {
         display: inline-flex;
         padding-top: 80px;
-        padding-right: 10px;
-        padding-left: 10px;
+        padding-right: 40px;
+        padding-left: 40px;
         padding-bottom: 10px;
     }
 
@@ -103,17 +103,16 @@ h1{
 @media(max-width: 1200px) {
     .student-container {
         display: flex;
+        width: 100%;
         flex-direction: column;
         align-items: center;
-        padding: 20px;
-        margin-top: 80px;
-        margin-bottom: 50px;
+        padding: 40px;
+        margin-top: 20px;
+        margin-bottom: 120px;
     }
 
     .left img {
-        margin-top: 30px;
-        width: 100%;
-        padding: 20px;
+        display: none;
     }
 
     .left {

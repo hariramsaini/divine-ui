@@ -14,7 +14,16 @@ const routes = [
     {
         name: 'Home',
         path: '/',
-        component: Home
+        component: Home,
+        beforeEnter: (to, from, next) => {
+            const { uri } = to.query;
+            if (uri != null && uri != '/') {
+                next(false);
+                router.push(uri);
+            } else {
+                next();
+            }
+        }
     },
     {
         name: 'Careers',
@@ -58,9 +67,9 @@ const routes = [
         component: Admin
     },
     {
-        name:'Dashboard',
-        path:'/dashboard',
-        component:Dashboard
+        name: 'Dashboard',
+        path: '/dashboard',
+        component: Dashboard
     }
 ];
 

@@ -15,8 +15,9 @@ export default {
   components: {
     FooterComp
   },
-  mounted() {
-    localStorage.removeItem('user')
+  mounted() { 
+    //If want to do somethin on refresh do it here
+    //localStorage.removeItem('user')
   }
 }
 </script>

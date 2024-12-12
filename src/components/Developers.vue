@@ -15,7 +15,7 @@
                 है जब हम जो कुछ भी बोएंगे वह बहुत मजबूती से बड़ा होगा और इन बच्चों का भविष्य शानदार होगा।
             </p>
         </section>
-        <section class="slider10th">
+        <section class="dev-slider">
             <h1>Our Developers Team</h1>
             <Slider :data="data"></Slider>
         </section>
@@ -71,11 +71,16 @@ export default {
         display: flex;
         flex-direction: column-reverse;
         align-items: center;
+        margin-bottom: 120px;
     }
 
-    .slider10th {
+    .dev-slider {
         width: 100%;
         margin-bottom: 50px;
+    }
+
+    .dev-slider h1 {
+        color: #3F51B5;
     }
 
     p {
@@ -94,8 +99,12 @@ export default {
         align-items: center;
     }
 
-    .slider10th {
+    .dev-slider {
         width: 70%;
+    }
+
+    .dev-slider h1 {
+        color: #3F51B5;
     }
 
     p {

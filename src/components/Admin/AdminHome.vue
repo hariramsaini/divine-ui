@@ -13,9 +13,10 @@
                         </FileLoad>
                     </div>
                     <div class="inner-container">
-                        <div v-for="item in section10th" :key="item">
-                            <img :src="`data:image/png;base64,${item.base64}`" alt="">
-                            <input type="checkbox" :value="item.fileId" v-model="selectedImages">
+                        <div v-for="(item, index) in section10th" :key="item">
+                            <img :src="`data:image/png;base64,${item.base64}`" alt="" ref="img"
+                                v-on:click="selectOnDoubleClick(index)">
+                            <input type="checkbox" :value="item.fileId" v-model="selectedImages" ref="myCheckbox">
                         </div>
                     </div>
                 </section>
@@ -95,6 +96,18 @@ export default {
         },
         openUpload() {
             this.$refs.fileUpload.openUpload()
+        },
+        selectOnDoubleClick(index) {
+            if (this.$refs.img[index].style.border == '1px solid red' && this.$refs.myCheckbox[index].checked == true) {
+                this.$refs.img[index].style.border = ''
+                this.$refs.myCheckbox[index].checked = false
+                this.selectedImages.pop(this.$refs.myCheckbox[index].value)
+            } else {
+                this.$refs.img[index].style.border = '1px solid red'
+                this.$refs.myCheckbox[index].checked = true
+                this.selectedImages.push(parseInt(this.$refs.myCheckbox[index].value))
+            }
+            console.warn(this.selectedImages)
         }
     }
 

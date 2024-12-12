@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="bin-container">
         <h1>Recycle Bin</h1>
         <div class="header">
             <button @click="clearBin()" v-if="binFiles.length > 0">Clear Bin</button>
@@ -104,9 +104,11 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.bin-container {
     background-color: aliceblue;
     margin-top: 10px;
+    padding: 10px;
+    width: -webkit-calc(100% - 12px);
 }
 
 .inner-container {

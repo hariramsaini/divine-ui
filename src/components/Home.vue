@@ -116,7 +116,7 @@ export default {
             session: '2023 - 24'
         }
     },
-    beforeCreate() {
+    beforeMount() {
         this.getFiles()
     },
     methods: {
@@ -125,11 +125,16 @@ export default {
         },
         getFiles() {
             const req = { "screen": "Home", "section": "10th" }
+            if (localStorage.getItem('Home10th')) {
+                this.class10th.array = JSON.parse(localStorage.getItem('Home10th'))
+            }
             getFiles(req).then(res => {
                 console.warn(JSON.stringify(res.data.data))
                 if (res.status == 200) {
                     const data = res.data.data
                     this.class10th.array = data
+                    localStorage.setItem('Home10th', JSON.stringify(data))
+
                 } else {
                     console.warn(JSON.stringify(res.data))
                 }
@@ -209,8 +214,13 @@ export default {
 }
 
 .left h1 {
-    color: blueviolet;
+    color: #3F51B5;
     font-size: xx-large;
+    margin: 2px;
+}
+
+.left h3 {
+    color: #3F51B5;
 }
 
 .left section {
