@@ -5,11 +5,12 @@
             <button @click="clearBin()" v-if="binFiles.length > 0">Clear Bin</button>
             <button @click="restoreFile()" v-if="selectedImages.length > 0">Restore</button>
             <button @click="deleteFilePermanentaly()" v-if="selectedImages.length > 0">Delete Permanentaly</button>
+            <button @click="unselectAll()" v-if="selectedImages.length > 0">Unselect</button>
         </div>
         <div class="inner-container">
-            <div v-for="item in binFiles" :key="item">
-                <img :src="`data:image/png;base64,${item.base64}`" alt="">
-                <input type="checkbox" :value="item.fileId" v-model="selectedImages">
+            <div v-for="(item, index) in binFiles" :key="item">
+                <img :src="`data:image/png;base64,${item.base64}`" alt="" ref="img" v-on:click="selectFiles(index)">
+                <input type="checkbox" :value="item.fileId" ref="myCheckbox" v-model="selectedImages">
             </div>
         </div>
     </div>
@@ -35,9 +36,13 @@ export default {
             this.getBinFiles()
         },
         getBinFiles() {
+            if (localStorage.getItem('BinFiles')) {
+                this.binFiles = JSON.parse(localStorage.getItem('BinFiles'))
+            }
             getBinFiles().then(res => {
                 if (res.status == 200) {
                     this.binFiles = res.data.data
+                    localStorage.setItem('BinFiles', JSON.stringify(this.binFiles))
                 } else {
                     console.warn(res.status)
                 }
@@ -98,6 +103,26 @@ export default {
                 console.error(error);
 
             })
+        },
+        selectFiles(index) {
+            if (this.$refs.img[index].style.border == '1px solid red' && this.$refs.myCheckbox[index].checked == true) {
+                this.$refs.img[index].style.border = ''
+                this.$refs.myCheckbox[index].checked = false
+                this.selectedImages.pop(this.$refs.myCheckbox[index].value)
+            } else {
+                this.$refs.img[index].style.border = '1px solid red'
+                this.$refs.myCheckbox[index].checked = true
+                this.selectedImages.push(parseInt(this.$refs.myCheckbox[index].value))
+            }
+            console.warn(this.selectedImages)
+        },
+        unselectAll() {
+            for (let index = 0; index < this.binFiles.length; index++) {
+                this.$refs.img[index].style.border = '';
+                this.$refs.myCheckbox[index].checked = false
+                this.selectedImages = []
+            }
+
         }
     }
 }

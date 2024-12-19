@@ -3,31 +3,33 @@
         <TabWrapper>
             <tab title="Home" class="home">
 
-                <section class="Results">
-                    <h2>Results</h2>
-                    <div class="header">
-                        <button @click="openUpload()">Upload</button>
-                        <button @click="deleteFile()" v-if="selectedImages.length > 0">Delete</button>
-                        <FileLoad maxImgSize=10 UnitTypeOfSize="MB" url="/dms/uploadFiles" screen="Home" section="10th"
-                            :reloadMethod="reload" ref="fileUpload">
-                        </FileLoad>
-                    </div>
-                    <div class="inner-container">
-                        <div v-for="(item, index) in section10th" :key="item">
-                            <img :src="`data:image/png;base64,${item.base64}`" alt="" ref="img"
-                                v-on:click="selectOnDoubleClick(index)">
-                            <input type="checkbox" :value="item.fileId" v-model="selectedImages" ref="myCheckbox">
+                <TabWrapper>
+                    <tab title="Result" class="result">
+                        <div class="header">
+                            <button @click="openUpload()">Upload</button>
+                            <button @click="deleteFile()" v-if="selectedImages.length > 0">Delete</button>
+                            <button @click="unselectAll()" v-if="selectedImages.length > 0">Unselect</button>
+                            <FileLoad maxImgSize=10 UnitTypeOfSize="MB" url="/dms/uploadFiles" screen="Home"
+                                section="10th" :reloadMethod="reload" ref="fileUpload">
+                            </FileLoad>
                         </div>
-                    </div>
-                </section>
-                <span
-                    style="background-color: lightblue; width: 100%; height: 3px; margin-bottom: 10px; margin-top: 10px;"></span>
-                <section class="10th" style="border: none; width: 99%; margin: 10px;">
-                    <h2>More Sections</h2>
-                </section>
+                        <div class="inner-container"  v-on:click="getImages" v-on:scrollend="getImages" v-on:touchend="getImages">
+                            <div v-for="(item, index) in section10th" :key="item">
+                                <img :src="`data:image/png;base64,${item.base64}`" alt="" ref="img"
+                                    v-on:click="selectFiles(index)">
+                                <input type="checkbox" :value="item.fileId" v-model="selectedImages" ref="myCheckbox">
+                            </div>
+                        </div>
+                    </tab>
+                    <tab title="MoreSection" class="moreSections">
+                        <section>
+                            <h2>More Sections</h2>
+                        </section>
+                    </tab>
+                </TabWrapper>
             </tab>
             <tab title="Careers">Hello From Tab 2</tab>
-            <tab title="Tab 3">Hello From Tab 3</tab>
+            <tab title="Developers">Hello From Tab 3</tab>
             <tab title="Tab 4">Hello From Tab 4</tab>
         </TabWrapper>
     </div>
@@ -51,30 +53,57 @@ export default {
             base64: 'sdf',
             showUpload: false,
             section10th: [],
-            selectedImages: []
+            selectedImages: [],
+            pageNo: 1,
+            pageSize: 7,
+            totalRecords: 0,
+            totalPages: 1
         }
     },
     created() {
-        this.getFiles()
+        this.getImages()
     },
     methods: {
         reload() {
-            this.getFiles()
+            this.section10th=[],
+            this.pageNo= 1,
+            this.totalRecords= 0,
+            this.totalPages= 1,
+            this.getImages()
         },
-        getFiles() {
-            const req = { "screen": "Home", "section": "10th" }
-            getFiles(req).then(res => {
-                console.warn(JSON.stringify(res.data.data))
-                if (res.status == 200) {
-                    const data = res.data.data
-                    this.section10th = data
-                } else {
-                    console.warn(JSON.stringify(res.data))
-                }
-            }).catch(error => {
-                console.error(error);
+        getImages() {
+            const req = {
+                "pageNo": this.pageNo,
+                "pageSize": this.pageSize,
+                "totalRecords": this.totalRecords,
+                request: { "screen": "Home", "section": "10th" }
+            }
+            if (this.section10th.length == 0 || this.section10th.length < this.totalRecords) {
+                getFiles(req).then(res => {
+                    if (res.status == 200) {
+                        const data = res.data.data
+                        for (let index = 0; index < data.length; index++) {
+                            if (!this.section10th.includes(data[index].docId)) {
+                                this.section10th.push(data[index])
+                                
+                            }
+                        }
 
-            })
+                        this.totalRecords = res.data.totalRecords
+                        this.totalPages = res.data.pageCounts
+                        console.warn("Response:  " + JSON.stringify(res.data))
+                    } else {
+                        console.warn(JSON.stringify(res.data))
+                    }
+                }).catch(error => {
+                    console.error(error);
+
+                })
+            }
+
+            if (this.pageNo < this.totalPages || this.pageNo == 1) {
+                this.pageNo++;
+            }
         },
         deleteFile() {
             const req = {
@@ -97,7 +126,7 @@ export default {
         openUpload() {
             this.$refs.fileUpload.openUpload()
         },
-        selectOnDoubleClick(index) {
+        selectFiles(index) {
             if (this.$refs.img[index].style.border == '1px solid red' && this.$refs.myCheckbox[index].checked == true) {
                 this.$refs.img[index].style.border = ''
                 this.$refs.myCheckbox[index].checked = false
@@ -108,6 +137,14 @@ export default {
                 this.selectedImages.push(parseInt(this.$refs.myCheckbox[index].value))
             }
             console.warn(this.selectedImages)
+        },
+        unselectAll() {
+            for (let index = 0; index < this.section10th.length; index++) {
+                this.$refs.img[index].style.border = '';
+                this.$refs.myCheckbox[index].checked = false
+                this.selectedImages = []
+            }
+
         }
     }
 
@@ -117,7 +154,7 @@ export default {
 <style scoped>
 .container {
     background-color: aliceblue;
-    padding: 10px 20px;
+    padding: 10px;
     margin-top: 10px;
 }
 
@@ -136,16 +173,15 @@ section {
     overflow-y: auto;
     /* Enable vertical scrolling */
     max-height: 590px;
+    width: 100%s;
 }
 
 .header {
     display: flex;
     align-items: center;
     padding: 5px;
-    border: 2px solid darkblue;
+    border-bottom: 2px solid darkblue;
     margin-bottom: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
 }
 
 .header button {
@@ -167,10 +203,11 @@ section {
 
 .home {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     border: 1px solid lightblue;
     border-radius: 10px;
+    width: 100%;
 }
 
 .btn-upload {
@@ -187,18 +224,6 @@ section {
 .btn-upload:hover {
     background-color: lightblue;
     color: black;
-}
-
-h2 {
-    width: 100%;
-    height: 40px;
-    align-content: center;
-    background-color: darkblue;
-    color: white;
-    margin-top: 0;
-    margin-bottom: 0;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
 }
 
 img {

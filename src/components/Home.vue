@@ -3,7 +3,7 @@
     <div class="main">
         <div style="height: 5px;"></div>
         <div class="left">
-            <section class="slider10th">
+            <section class="slider10th" v-on:click="getImages" v-on:wheel="getImages" v-on:touchend="getImages">
                 <h1>Results</h1>
                 <Slider :data="class10th"></Slider>
             </section>
@@ -22,7 +22,7 @@
                     changing world by fostering an inclusive and supportive atmosphere.</p>
 
             </section>
-            <section>
+            <section style="padding: 20px;">
                 <h1>Facilities</h1>
                 <section>
                     <h3>Computer Lab</h3>
@@ -113,35 +113,50 @@ export default {
                 slideFor: 'student',
                 array: []
             },
-            session: '2023 - 24'
+            session: '2023 - 24',
+            pageNo: 1,
+            pageSize: 2,
+            totalRecords: 0,
+            totalPages: 1
         }
     },
     beforeMount() {
-        this.getFiles()
+        this.getImages()
     },
     methods: {
         reload() {
-            this.getFiles()
+            this.getImages()
         },
-        getFiles() {
-            const req = { "screen": "Home", "section": "10th" }
-            if (localStorage.getItem('Home10th')) {
-                this.class10th.array = JSON.parse(localStorage.getItem('Home10th'))
+        getImages() {
+            const req = {
+                "pageNo": this.pageNo,
+                "pageSize": this.pageSize,
+                "totalRecords": this.totalRecords,
+                "request": { "screen": "Home", "section": "10th" }
             }
-            getFiles(req).then(res => {
-                console.warn(JSON.stringify(res.data.data))
-                if (res.status == 200) {
-                    const data = res.data.data
-                    this.class10th.array = data
-                    localStorage.setItem('Home10th', JSON.stringify(data))
+            if (this.class10th.array.length == 0 || this.class10th.array.length < this.totalRecords) {
+                getFiles(req).then(res => {
+                    if (res.status == 200) {
+                        const data = res.data.data
+                        for (let index = 0; index < data.length; index++) {
+                            this.class10th.array.push(data[index])
+                        }
 
-                } else {
-                    console.warn(JSON.stringify(res.data))
-                }
-            }).catch(error => {
-                console.error(error);
+                        this.totalRecords = res.data.totalRecords
+                        this.totalPages = res.data.pageCounts
+                        console.warn("Response:  " + JSON.stringify(res.data))
+                    } else {
+                        console.warn(JSON.stringify(res.data))
+                    }
+                }).catch(error => {
+                    console.error(error);
 
-            })
+                })
+            }
+
+            if (this.pageNo < this.totalPages || this.pageNo==1) {
+                this.pageNo++;
+            }
         }
     }
 }

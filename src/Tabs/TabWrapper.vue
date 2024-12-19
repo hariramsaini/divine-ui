@@ -33,11 +33,23 @@ export default {
 </script>
 
 <style scoped>
+.tab_headers {
+    width: 98%;
+    flex-direction: row;
+}
+
 .wrapper-view {
     overflow-y: auto;
-    width: 95%;
-    /* Enable vertical scrolling */
-    max-height: 590px;
+    width: 98%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    /* Enable vertical scrolling 
+    max-height: 590px;*/
+}
+
+.wrapper-container {
+    padding: 5px;
 }
 
 .wrapper-container ul {

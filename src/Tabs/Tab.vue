@@ -22,7 +22,7 @@ export default {
 
 <style scoped>
 .tab-container{
-    border: 1px solid #ddd;
+    /*border: 1px solid #ddd;*/
 }
 
 </style>

@@ -1,19 +1,19 @@
 <template>
     <div v-if="show" class="cu-main">
         <h1>Contact Us</h1>
-        <input type="text" placeholder="Enter Student Name" ref="sName" v-model="details.sName">
-        <input type="text" placeholder="Father's Name" ref="fName" v-model="details.name">
-        <select name="class" id="class" ref="class" style="color: gray;" v-model="details.class">
+        <input type="text" placeholder="Enter Student Name" ref="sName" v-model="details.studentName">
+        <input type="text" placeholder="Father's Name" ref="fName" v-model="details.fatherName">
+        <select name="class" id="class" ref="class" style="color: gray;" v-model="details.studentClass">
             <option value="" disabled selected hidden>Select Class</option>
-            <option value="Playgroup">Play Group</option>
-            <option value="Nursery">Nursery</option>
-            <option value="LKG">LKG</option>
-            <option value="UKG">UKG</option>
+            <option v-for="item in classArray" :key="item" :value="item.key">
+                {{ item.value }}
+            </option>
         </select>
-        <input type="number" maxlength="10" placeholder="Enter Contact Number" ref="mobile" v-model="details.mobile">
+        <input type="number" maxlength="10" placeholder="Enter Contact Number" ref="mobile"
+            v-model="details.contactNumber">
         <input type="email" placeholder="Enter Email" ref="email" v-model="details.email">
         <input type="text" placeholder="Enter Address" ref="address" v-model="details.address">
-        <button v-on:click="sendEmail()">Submit</button>
+        <button v-on:click="submitEnquiry()">Submit</button>
     </div>
     <div v-else class="cu-main">
         <h1>Thank you, we will get back to you soon..</h1>
@@ -25,25 +25,29 @@
 </template>
 
 <script>
+import { createAdmissionEnquiry } from '@/services/DivineService';
+import { getLookupByTypeName } from '@/services/LookupService';
+
 export default {
     name: 'ContactUs',
     data() {
         return {
             details: {
-                sName: '',
-                name: '',
+                studentName: '',
+                fatherName: '',
+                studentClass: '',
+                contactNumber: Number,
                 email: '',
-                mobile: Number,
-                address: '',
-                class: ''
+                address: ''
             },
+            classArray: [],
             show: true,
             error: [],
             displayError: false
         }
     },
     methods: {
-        sendEmail() {
+        submitEnquiry() {
             this.$refs.sName.focus()
             this.error = []
             console.warn("sendEmail", this.details)
@@ -59,20 +63,21 @@ export default {
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                     if (!emailRegex.test(element) && item == 'email') {
                         this.error.push(item)
-                        this.$refs.fName.focus()
+                        this.$refs.email.focus()
                     }
                     const nameRegex = /^[a-zA-Z]+$/;
-                    if (!nameRegex.test(element) && item == 'name') {
+                    if (!nameRegex.test(element) && item == 'fatherName') {
                         this.error.push(item)
                         this.$refs.fName.focus()
                     }
-                    if (!nameRegex.test(element) && item == 'sName') {
+                    if (!nameRegex.test(element) && item == 'studentName') {
                         this.error.push(item)
                         this.$refs.sName.focus()
                     }
                     const mobileRegex = /^[0-9]+$/;
-                    if (!mobileRegex.test(element) && item == 'mobile') {
+                    if (!mobileRegex.test(element) && item == 'contactNumber') {
                         this.error.push(item)
+                        this.$refs.mobile.focus()
                     }
                 }
             }
@@ -80,6 +85,11 @@ export default {
 
 
             if (this.error.length == 0) {
+                createAdmissionEnquiry(this.details).then(res => {
+                    console.warn(res)
+                }).catch(error => {
+                    console.error(error);
+                })
                 this.show = false
             } else {
                 this.displayError = true
@@ -89,10 +99,11 @@ export default {
             }
         },
     },
+
     watch: {
-        'details.name': function (currentVal, previousVal) {
+        'details.fatherName': function (currentVal, previousVal) {
             if (String(currentVal).length > 50) {
-                this.details.name = previousVal
+                this.details.fatherName = previousVal
             }
         },
         'details.email': function (currentVal, previousVal) {
@@ -110,6 +121,19 @@ export default {
                 this.details.email = previousVal
             }
         },
+    },
+
+    created() {
+        const req = {
+            "typeName": "CLASS"
+        }
+        getLookupByTypeName(req).then(res => {
+            this.classArray = res;
+            console.warn("Response:  " + JSON.stringify(this.classArray))
+        }).catch(error => {
+            console.error(error);
+        })
+
     }
 }
 </script>

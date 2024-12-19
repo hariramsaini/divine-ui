@@ -81,7 +81,7 @@ export default {
     },
     created() {
         if (localStorage.getItem('user') == null) {
-            this.$router.push({ name: 'Admin' })
+            //this.$router.push({ name: 'Admin' })
         }
     },
     methods: {
