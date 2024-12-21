@@ -3,14 +3,13 @@
         <h1>Contact Us</h1>
         <input type="text" placeholder="Enter Student Name" ref="sName" v-model="details.studentName">
         <input type="text" placeholder="Father's Name" ref="fName" v-model="details.fatherName">
-        <select name="class" id="class" ref="class" style="color: gray;" v-model="details.studentClass">
+        <select name="class" id="class" ref="class" v-model="details.studentClass">
             <option value="" disabled selected hidden>Select Class</option>
             <option v-for="item in classArray" :key="item" :value="item.key">
                 {{ item.value }}
             </option>
         </select>
-        <input type="number" maxlength="10" placeholder="Enter Contact Number" ref="mobile"
-            v-model="details.contactNumber">
+        <input type="number" placeholder="Enter Contact Number" ref="mobile" v-model="details.contactNumber">
         <input type="email" placeholder="Enter Email" ref="email" v-model="details.email">
         <input type="text" placeholder="Enter Address" ref="address" v-model="details.address">
         <button v-on:click="submitEnquiry()">Submit</button>
@@ -19,8 +18,7 @@
         <h1>Thank you, we will get back to you soon..</h1>
     </div>
     <div v-if="displayError" class="errDiv">
-        <p class="err"> Following fields are invalid: </p><br>
-        <p class="err" v-for="item in error" :key="item">{{ item }}, </p>
+        <p class="err"> Above field(s) data invalid </p>
     </div>
 </template>
 
@@ -36,7 +34,7 @@ export default {
                 studentName: '',
                 fatherName: '',
                 studentClass: '',
-                contactNumber: Number,
+                contactNumber: '',
                 email: '',
                 address: ''
             },
@@ -50,34 +48,39 @@ export default {
         submitEnquiry() {
             this.$refs.sName.focus()
             this.error = []
-            console.warn("sendEmail", this.details)
-            for (let item in this.details) {
-                const element = this.details[item]
-                if (element == '' || element == null) {
-                    this.error.push(item)
-                }
-            }
+
             if (this.error.length == 0) {
                 for (let item in this.details) {
                     const element = this.details[item]
+
+                    if ((element == '') && item == 'studentName') {
+                        this.error.push(item)
+                        this.$refs.sName.style.border = '2px solid red'
+                    }
+                    if ((element == '') && item == 'fatherName') {
+                        this.error.push(item)
+                        this.$refs.fName.style.border = '2px solid red'
+                    }
+
+                    if ((element == '') && item == 'studentClass') {
+                        this.error.push(item)
+                        this.$refs.class.style.border = '2px solid red'
+                    }
+
+                    if ((element == '') && item == 'contactNumber') {
+                        this.error.push(item)
+                        this.$refs.mobile.style.border = '2px solid red'
+                    }
+
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(element) && item == 'email') {
+                    if ((!emailRegex.test(element) || element == '') && item == 'email') {
                         this.error.push(item)
-                        this.$refs.email.focus()
+                        this.$refs.email.style.border = '2px solid red'
                     }
-                    const nameRegex = /^[a-zA-Z]+$/;
-                    if (!nameRegex.test(element) && item == 'fatherName') {
+
+                    if ((element == '') && item == 'address') {
                         this.error.push(item)
-                        this.$refs.fName.focus()
-                    }
-                    if (!nameRegex.test(element) && item == 'studentName') {
-                        this.error.push(item)
-                        this.$refs.sName.focus()
-                    }
-                    const mobileRegex = /^[0-9]+$/;
-                    if (!mobileRegex.test(element) && item == 'contactNumber') {
-                        this.error.push(item)
-                        this.$refs.mobile.focus()
+                        this.$refs.address.style.border = '2px solid red'
                     }
                 }
             }
@@ -86,11 +89,15 @@ export default {
 
             if (this.error.length == 0) {
                 createAdmissionEnquiry(this.details).then(res => {
-                    console.warn(res)
+                    console.warn("response>>>" + JSON.stringify(res))
+                    if (res.code == 200) {
+                        this.show = false
+                    } else {
+                        this.error.push(res.message)
+                    }
                 }).catch(error => {
                     console.error(error);
                 })
-                this.show = false
             } else {
                 this.displayError = true
                 setTimeout(() => {
@@ -101,25 +108,54 @@ export default {
     },
 
     watch: {
+        'details.studentName': function (currentVal, previousVal) {
+            if (String(currentVal).length > 50) {
+                this.details.studentName = previousVal
+            }
+
+            const nameRegex = /^[ a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/;
+            if (!nameRegex.test(currentVal) && this.details.studentName.length > 1) {
+                this.details.studentName = previousVal
+            }
+
+            this.$refs.sName.style.border = ''
+        },
         'details.fatherName': function (currentVal, previousVal) {
             if (String(currentVal).length > 50) {
                 this.details.fatherName = previousVal
             }
+
+            const nameRegex = /^[ a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/;
+            if (!nameRegex.test(currentVal) && this.details.fatherName.length > 1) {
+                this.details.fatherName = previousVal
+            }
+
+            this.$refs.fName.style.border = ''
         },
+
+        'details.studentClass': function () {
+            this.$refs.class.style.border = ''
+        },
+
         'details.email': function (currentVal, previousVal) {
             if (String(currentVal).length > 50) {
                 this.details.email = previousVal
             }
+            this.$refs.email.style.border = ''
         },
-        'details.mobile': function (currentVal, previousVal) {
+
+        'details.contactNumber': function (currentVal, previousVal) {
             if (String(currentVal).length > 10) {
-                this.details.mobile = previousVal
+                this.details.contactNumber = previousVal
             }
+            this.$refs.mobile.style.border = ''
         },
+
         'details.address': function (currentVal, previousVal) {
             if (String(currentVal).length > 100) {
-                this.details.email = previousVal
+                this.details.address = previousVal
             }
+            this.$refs.address.style.border = ''
         },
     },
 
@@ -129,7 +165,6 @@ export default {
         }
         getLookupByTypeName(req).then(res => {
             this.classArray = res;
-            console.warn("Response:  " + JSON.stringify(this.classArray))
         }).catch(error => {
             console.error(error);
         })

@@ -144,7 +144,7 @@ export default {
 
                         this.totalRecords = res.data.totalRecords
                         this.totalPages = res.data.pageCounts
-                        console.warn("Response:  " + JSON.stringify(res.data))
+                        //console.warn("Response:  " + JSON.stringify(res.data))
                     } else {
                         console.warn(JSON.stringify(res.data))
                     }
