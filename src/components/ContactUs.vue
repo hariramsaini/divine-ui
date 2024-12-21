@@ -92,6 +92,7 @@ export default {
                     console.warn("response>>>" + JSON.stringify(res))
                     if (res.code == 200) {
                         this.show = false
+                        this.displayError = false;
                     } else {
                         this.error.push(res.message)
                     }
