@@ -39,7 +39,7 @@ export default {
 }
 
 .wrapper-view {
-    overflow-y: auto;
+    /* overflow-y: auto; */
     width: 98%;
     display: flex;
     flex-wrap: wrap;

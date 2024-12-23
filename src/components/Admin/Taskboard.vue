@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { logout } from '@/services/UmService';
+import { logout, setupTimers } from '@/services/UmService';
 import AdminHome from './AdminHome.vue';
 import AdminCareers from './AdminCareers.vue';
 import AdminDevelopers from './AdminDevelopers.vue';
@@ -81,8 +81,14 @@ export default {
     },
     created() {
         if (localStorage.getItem('user') == null) {
-            //this.$router.push({ name: 'Admin' })
+            this.$router.push({ name: 'Admin' })
         }
+
+        // No activity auto logout
+        setupTimers()
+
+        // On window or tab close logout
+        //window.addEventListener("beforeunload", logout())
     },
     methods: {
         logout() {
@@ -139,17 +145,18 @@ export default {
     justify-content: space-between;
 }
 
-.close-button i,a {
+.close-button i,
+a {
     color: white;
     font-size: 24px
 }
 
-a{
+a {
     text-decoration: none;
 }
 
 .header {
-    height: 35px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;

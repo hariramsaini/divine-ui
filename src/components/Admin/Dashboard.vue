@@ -3,7 +3,8 @@
         <TabWrapper>
             <tab title="Admissions">
 
-                <div class="career-main">
+                <div class="career-main" v-on:click="getAdmissionApps" v-on:wheel="getAdmissionApps"
+                    v-on:touchend="getAdmissionApps">
                     <table>
                         <tr class="tableH">
                             <th>Application Id</th>
@@ -14,27 +15,26 @@
                             <th>Email</th>
                             <th>Address</th>
                         </tr>
-                        <tr class="tableB">
-                            <td>1001</td>
-                            <td>ABC</td>
-                            <td>XYZ</td>
-                            <td>8th</td>
-                            <td>7737201905</td>
-                            <td>abc@gmail.com</td>
-                            <td>Ward 19,Sikar</td>
+                        <tr class="tableB" v-for="item in applications" :key="item">
+                            <td>{{ item.applicationId }}</td>
+                            <td>{{ item.sName }}</td>
+                            <td>{{ item.fName }}</td>
+                            <td>{{ item.class }}</td>
+                            <td>{{ item.mobile }}</td>
+                            <td>{{ item.email }}</td>
+                            <td>{{ item.address }}</td>
                         </tr>
                     </table>
                 </div>
 
             </tab>
-            <tab title="Jobs">Hello From Tab 2</tab>
-            <tab title="Tab 3">Hello From Tab 3</tab>
-            <tab title="Tab 4">Hello From Tab 4</tab>
+            <tab title="Jobs">Coming Soon</tab>
         </TabWrapper>
     </div>
 </template>
 
 <script>
+import { getAddmissionEnquiries } from '@/services/DivineService';
 import Tab from '@/Tabs/Tab.vue';
 import TabWrapper from '@/Tabs/TabWrapper.vue';
 export default {
@@ -43,6 +43,52 @@ export default {
         Tab,
         TabWrapper,
     },
+    data() {
+        return {
+            applications: [],
+            pageNo: 1,
+            pageSize: 30,
+            totalRecords: 0,
+            totalPages: 1
+        }
+    },
+    created() {
+        this.getAdmissionApps()
+    },
+    methods: {
+        getAdmissionApps() {
+            const req = {
+                "pageNo": this.pageNo,
+                "pageSize": this.pageSize,
+                "totalRecords": this.totalRecords,
+                "searchBy": "",
+                "searchArgument": ""
+            }
+            if (this.applications.length == 0 || this.applications.length < this.totalRecords) {
+                getAddmissionEnquiries(req).then(res => {
+                    console.warn(JSON.stringify(res))
+                    if (res.status == 200) {
+                        const data = res.data.data
+                        for (let index = 0; index < data.length; index++) {
+                            this.applications.push(data[index])
+                        }
+
+                        this.totalRecords = res.data.totalRecords
+                        this.totalPages = res.data.pageCounts
+                        //console.warn("Response:  " + JSON.stringify(res.data))
+                    } else {
+                        console.warn(JSON.stringify(res.data))
+                    }
+                }).catch(error => {
+                    console.error(error);
+
+                })
+            }
+            if (this.pageNo < this.totalPages || this.pageNo == 1) {
+                this.pageNo++;
+            }
+        }
+    }
 }
 </script>
 
@@ -56,6 +102,8 @@ export default {
 .career-main {
     width: 100%;
     background-color: lightcyan;
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
 }
 
 table {

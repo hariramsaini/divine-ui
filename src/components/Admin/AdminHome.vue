@@ -30,7 +30,6 @@
             </tab>
             <tab title="Careers">Hello From Tab 2</tab>
             <tab title="Developers">Hello From Tab 3</tab>
-            <tab title="Tab 4">Hello From Tab 4</tab>
         </TabWrapper>
     </div>
 </template>
@@ -172,8 +171,21 @@ section {
     align-items: center;
     overflow-y: auto;
     /* Enable vertical scrolling */
-    max-height: 590px;
+    max-height: 600px;
     width: 100%s;
+}
+
+@media(max-width: 1200px){
+    .inner-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+    max-height: 530px;
+    width: 100%s;
+}
 }
 
 .header {
