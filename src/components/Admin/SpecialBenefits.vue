@@ -3,12 +3,12 @@
         <button @click="openUpload()">Upload</button>
         <button @click="deleteFile()" v-if="selectedImages.length > 0">Delete</button>
         <button @click="unselectAll()" v-if="selectedImages.length > 0">Unselect</button>
-        <input type="file" multiple accept=".jpg,.jpeg,.png" name="image" id="file-field-developers" @change="handleFileUpload"
+        <input type="file" multiple accept=".jpg,.jpeg,.png" name="image" id="file-field-benefits" @change="handleFileUpload"
             style="display: none;" ref="fileUpload">
     </div>
-    <div class="inner-container" v-on:click="get10thImages" v-on:scrollend="get10thImages"
-        v-on:touchend="get10thImages">
-        <div v-for="(item, index) in section10th" :key="item">
+    <div class="inner-container" v-on:click="getSpecialFacilityImages" v-on:scrollend="getSpecialFacilityImages"
+        v-on:touchend="getSpecialFacilityImages">
+        <div v-for="(item, index) in specialFacilities" :key="item">
             <img :src="`data:image/png;base64,${item.base64}`" alt="" ref="img" v-on:click="selectFiles(index)">
             <input type="checkbox" :value="item.fileId" v-model="selectedImages" ref="myCheckbox">
         </div>
@@ -19,20 +19,20 @@
 import { deleteFiles, getDashboardFiles, uploadFiles } from '@/services/DmsService';
 
 export default {
-    name: 'ResultsComp',
+    name: 'SpecialBenefits',
     data() {
         return {
             base64: 'sdf',
             showUpload: false,
-            section10th: [],
+            specialFacilities: [],
             selectedImages: [],
             pageNo: 1,
             pageSize: 7,
             totalRecords: 0,
             totalPages: 1,
             showNewJobPost: false,
-            screen: "Developers",
-            section: "Developers"
+            screen: "Home",
+            section: "Special Facilities"
         }
     },
     beforeMount() {
@@ -40,27 +40,27 @@ export default {
     },
     methods: {
         reload() {
-            this.section10th = [],
+            this.specialFacilities = [],
                 this.pageNo = 1,
                 this.totalRecords = 0,
-                this.totalPages = 1,
-                this.get10thImages()
+                this.totalPages = 1
+            this.getSpecialFacilityImages()
         },
 
-        get10thImages() {
+        getSpecialFacilityImages() {
             const req = {
                 "pageNo": this.pageNo,
                 "pageSize": this.pageSize,
                 "totalRecords": this.totalRecords,
                 request: { "screen": this.screen, "section": this.section }
             }
-            if (this.section10th.length == 0 || this.section10th.length < this.totalRecords) {
+            if (this.specialFacilities.length == 0 || this.specialFacilities.length < this.totalRecords) {
                 getDashboardFiles(req).then(res => {
                     if (res.status == 200) {
                         const data = res.data.data
                         for (let index = 0; index < data.length; index++) {
-                            if (!this.section10th.includes(data[index].docId)) {
-                                this.section10th.push(data[index])
+                            if (!this.specialFacilities.includes(data[index].docId)) {
+                                this.specialFacilities.push(data[index])
 
                             }
                         }
@@ -125,7 +125,6 @@ export default {
                 // Handle successful upload
                 if (response.status == 200) {
                     this.reload()
-                    this.uploadProgress = 0; // Reset progress
                 } else {
                     console.log(response);
                 }
@@ -134,12 +133,11 @@ export default {
                 .catch((error) => {
                     // Handle error
                     console.error(error);
-                    this.uploadProgress = 0; // Reset progress
                 });
         },
 
         openUpload() {
-            document.getElementById('file-field-developers').click()
+            document.getElementById('file-field-benefits').click()
         },
 
         selectFiles(index) {

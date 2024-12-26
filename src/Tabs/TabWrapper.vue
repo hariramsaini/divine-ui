@@ -60,7 +60,8 @@ export default {
 }
 
 .wrapper-container li {
-    width: 80px;
+    width: 120px;
+    height: 20px;
     text-align: center;
     padding: 10px 20px;
     margin-right: 10px;

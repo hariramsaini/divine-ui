@@ -3,9 +3,12 @@
         <div class="header">
             <div class="logo">
                 <!--h2 class="title">Divine English Academy Radhakishanpura...</h2-->
-                <router-link to="/" class="link"><img src="@/assets/banner/banner.png" alt=""></router-link>
+                <router-link to="/" class="link"><img src="@/assets/banner/logo.png" alt=""></router-link>
             </div>
-           
+
+            <div class="text">
+                <h1>Divine English Academy...</h1>
+            </div>
             <div class="nav-menu-bar">
                 <i class="fa fa-bars" aria-hidden="true" @click="mobileMenu = !mobileMenu"></i>
             </div>
@@ -18,7 +21,8 @@
         </div>
         <div class="nav" v-show="mobileMenu">
             <div class="sidebar">
-                <div class="close-button"><i class="fa fa-window-close" aria-hidden="true" @click="mobileMenu = !mobileMenu"></i></div>
+                <div class="close-button"><i class="fa fa-window-close" aria-hidden="true"
+                        @click="mobileMenu = !mobileMenu"></i></div>
                 <router-link to="/" class="link"><i class="fa fa-fw fa-home"></i>Home</router-link>
                 <router-link to="/careers"><i class="fa fa-fw fa-wrench"></i>Careers</router-link>
                 <router-link to="/developers" class="link"><i class="fa fa-fw fa-users"></i>Developers</router-link>
@@ -93,7 +97,9 @@ export default {
         margin-right: 30px;
     }
 
-    
+    .header {
+        height: 80px;
+    }
 
     .nav-menu-bar i {
         color: white;
@@ -112,9 +118,9 @@ export default {
         flex-direction: row-reverse;
     }
 
-    .close-button i{
+    .close-button i {
         color: white;
-        font-size:24px
+        font-size: 24px
     }
 
     .sidebar {
@@ -144,6 +150,10 @@ export default {
     .nav a:hover {
         color: darkslateblue;
     }
+
+    .text h1 {
+        color: yellow;
+    }
 }
 
 @media(min-width: 1200px) {
@@ -155,6 +165,15 @@ export default {
     .nav {
         display: none;
     }
+
+    .header {
+        height: 70px;
+    }
+
+    .text h1 {
+        color: yellow;
+        font-size: xxx-large;
+    }
 }
 
 .title {
@@ -165,9 +184,15 @@ export default {
     color: darkslateblue;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+}
+
 .logo img {
     width: 60px;
     border-radius: 100px;
+    background-color: white;
 }
 
 .bar {

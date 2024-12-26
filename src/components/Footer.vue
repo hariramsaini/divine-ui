@@ -1,8 +1,8 @@
 <template>
     <div class="footer">
-        <h4>Contact Detail: +91-9928580651 / 01572272529</h4>
+        <h4>Contact Detail: +91-9928580651</h4>
         <div class="copyright">
-            <p>Copy Right @DivineEnglishAcademy</p>
+            <p><i class="fa fa-copyright" aria-hidden="true"></i> DivineEnglishAcademy 2024</p>
         </div>
         <div class="logo">
             <div class="fb-logo">

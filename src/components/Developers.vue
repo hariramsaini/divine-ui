@@ -1,28 +1,39 @@
 <template>
     <HeaderComp></HeaderComp>
     <div class="main">
-        <section stol>
-            <p>This application is developed by our school students from class 5th to 8th by session 2023-24. Our school
-                is the one who is giving software engineering training at initial level so childern can understand their
-                ability and growup with futuristic knowledge along with the basic subjects knowledge. We understand that
-                this is the age when whatever we will sow it will growup very strongly and will greate awesome future of
-                these children.</p>
-            <p>
-                यह एप्लिकेशन हमारे स्कूल के कक्षा 5वीं से 8वीं तक के छात्रों द्वारा सत्र 2023-24 तक विकसित किया गया है।
-                हमारा स्कूल
-                वह है जो प्रारंभिक स्तर पर सॉफ्टवेयर इंजीनियरिंग प्रशिक्षण दे रहा है ताकि बच्चे उन्हें समझ सकें
-                बुनियादी विषयों के ज्ञान के साथ-साथ भविष्य के ज्ञान के साथ क्षमता और विकास। हम समझते हैं कि यही वह उम्र
-                है जब हम जो कुछ भी बोएंगे वह बहुत मजबूती से बड़ा होगा और इन बच्चों का भविष्य शानदार होगा।
-            </p>
+        <section class="left">
+            <span>
+                <p>This web application is developed by our school students from class 5th to 8th by session 2024-25. Our
+                    school
+                    is the one who is giving software engineering training at initial level so childern can understand
+                    their
+                    ability and growup with futuristic knowledge along with the basic subjects knowledge. We understand
+                    that
+                    this is the age when whatever we will sow it will growup very strongly and will greate awesome
+                    future of
+                    these children.</p>
+            </span>
+            <span>
+                <p>
+                    यह वेब एप्लीकेशन हमारे स्कूल के कक्षा 5वीं से 8वीं तक के छात्रों द्वारा सत्र 2024-25 तक विकसित किया गया
+                    है।
+                    हमारा स्कूल
+                    वह है जो प्रारंभिक स्तर पर सॉफ्टवेयर इंजीनियरिंग प्रशिक्षण दे रहा है ताकि बच्चे उन्हें समझ सकें
+                    बुनियादी विषयों के ज्ञान के साथ-साथ भविष्य के ज्ञान के साथ क्षमता और विकास। हम समझते हैं कि यही वह
+                    उम्र
+                    है जब हम जो कुछ भी बोएंगे वह बहुत मजबूती से बड़ा होगा और इन बच्चों का भविष्य शानदार होगा।
+                </p>
+            </span>
         </section>
-        <section class="dev-slider">
+        <section class="dev-slider" v-on:click="getDevelopersImages" v-on:touchend="getDevelopersImages">
             <h1>Our Developers Team</h1>
-            <Slider :data="data"></Slider>
+            <Slider :data="developers"></Slider>
         </section>
     </div>
 </template>
 
 <script>
+import { getFiles } from '@/services/DmsService';
 import HeaderComp from './Header.vue';
 import Slider from './Slider.vue';
 export default {
@@ -33,30 +44,54 @@ export default {
     },
     data() {
         return {
-            data: {
-                slideFor: 'dev',
-                array: [
-                    {
-                        name: 'ABC',
-                        img: '01.jpg',
-                        class: '10th'
-                    },
-                    {
-                        name: 'XYV',
-                        img: "02.avif",
-                        class: '10th',
-                    },
-                    {
-                        name: 'XYZ',
-                        img: "03.jpeg",
-                        class: '10th',
-                    },
-                    {
-                        name: 'SDFG',
-                        img: "04.jpg",
-                        class: '10th',
-                    },
-                ]
+            developers: {
+                slideFor: 'student',
+                array: []
+            },
+            pageNo: 1,
+            pageSize: 2,
+            totalRecords: 0,
+            totalPages: 1
+        }
+    },
+    beforeMount() {
+        this.getDevelopersImages()
+    },
+    methods: {
+
+        reload() {
+            this.getDevelopersImages()
+        },
+
+        getDevelopersImages() {
+            const req = {
+                "pageNo": this.pageNo,
+                "pageSize": this.pageSize,
+                "totalRecords": this.totalRecords,
+                "request": { "screen": "Developers", "section": "Developers" }
+            }
+            if (this.developers.array.length == 0 || this.developers.array.length < this.totalRecords) {
+                getFiles(req).then(res => {
+                    if (res.status == 200) {
+                        const data = res.data.data
+                        for (let index = 0; index < data.length; index++) {
+                            this.developers.array.push(data[index])
+                        }
+
+                        this.totalRecords = res.data.totalRecords
+                        this.totalPages = res.data.pageCounts
+                        //console.warn("Response:  " + JSON.stringify(res.data))
+                    } else {
+                        console.warn(JSON.stringify(res.data))
+                    }
+                }).catch(error => {
+                    console.error(error);
+
+                })
+            }
+
+            if (this.pageNo < this.totalPages || this.pageNo == 1) {
+                this.pageNo++;
             }
         }
     }
@@ -72,6 +107,15 @@ export default {
         flex-direction: column-reverse;
         align-items: center;
         margin-bottom: 120px;
+    }
+
+    .left {
+        width: 90%;
+        border: 2px solid lightblue;
+        border-radius: 20px;
+        margin: 10px;
+        background-color: lightblue;
+        height: 600px;
     }
 
     .dev-slider {
@@ -99,8 +143,17 @@ export default {
         align-items: center;
     }
 
+    .left {
+        width: 60%;
+        border: 2px solid lightblue;
+        border-radius: 20px;
+        margin: 10px;
+        background-color: lightblue;
+        height: 600px;
+    }
+
     .dev-slider {
-        width: 70%;
+        width: 40%;
     }
 
     .dev-slider h1 {
@@ -110,6 +163,9 @@ export default {
     p {
         font-size: larger;
         color: darkblue;
+        width: 90%;
+        padding: 30px;
+        text-align: justify;
     }
 }
 </style>

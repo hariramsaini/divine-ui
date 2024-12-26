@@ -2,7 +2,7 @@
     <div class="FieldField_wrapper">
 
         <input type="file" multiple accept=".jpg,.jpeg,.png" name="image" id="file-field" @change="handleFileUpload"
-            style="display: none;">
+            style="display: none;" ref="fileUpload">
 
         <!--h2 v-show="uploadVisible" style="color: #96c8ef;">Browse to Upload</h2-->
 
@@ -11,6 +11,7 @@
 
 <script>
 import base_url from '@/data-types';
+import { uploadFiles } from '@/services/DmsService';
 import axios from 'axios';
 
 export default {
@@ -65,17 +66,8 @@ export default {
             for (let i = 0; i < this.selectedFiles.length; i++) {
                 formData.append('files', this.selectedFiles[i]);
             }
-            this.callUploadApi(formData)
-        },
 
-        async callUploadApi(formData) {
-
-            console.warn(JSON.stringify(this.requestPayload))
-            const result = await axios.post(base_url + this.url, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }).then((response) => {
+            uploadFiles(formData).then((response) => {
                 // Handle successful upload
                 if (response.status == 200) {
                     this.reloadMethod()
@@ -83,13 +75,13 @@ export default {
                 } else {
                     console.log(response);
                 }
+
             })
                 .catch((error) => {
                     // Handle error
                     console.error(error);
                     this.uploadProgress = 0; // Reset progress
                 });
-            console.warn(JSON.stringify(result))
         },
 
         updatePreview(event) {

@@ -29,9 +29,23 @@ axios.interceptors.response.use(
 
         if (status === 401) {
             // Handle unauthorized access
+            // const user = localStorage.getItem(user);
+            // if (user) {
+            //     const refreshTkn = JSON.parse(user).refreshToken
+            //     refreshToken({ "refreshToken": refreshTkn }).then(res => {
+            //         if (res.code == 200) {
+            //             localStorage.setItem('user', JSON.stringify(res))
+            //             return axios(error.config)
+            //         } else {
+            //             router.push('/admin')
+            //         }
+            //     })
+            // } else {
+            //     router.push('/admin')
+            // }
             router.push('/admin')
         } else if (status === 404) {
-            // Handle not found errors
+            router.push('/')
         } else {
             // Handle other errors
         }

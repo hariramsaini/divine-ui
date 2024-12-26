@@ -3,7 +3,7 @@
         <button @click="openUpload()">Upload</button>
         <button @click="deleteFile()" v-if="selectedImages.length > 0">Delete</button>
         <button @click="unselectAll()" v-if="selectedImages.length > 0">Unselect</button>
-        <input type="file" multiple accept=".jpg,.jpeg,.png" name="image" id="file-field-developers" @change="handleFileUpload"
+        <input type="file" multiple accept=".jpg,.jpeg,.png" name="image" id="file-field-result" @change="handleFileUpload"
             style="display: none;" ref="fileUpload">
     </div>
     <div class="inner-container" v-on:click="get10thImages" v-on:scrollend="get10thImages"
@@ -31,12 +31,12 @@ export default {
             totalRecords: 0,
             totalPages: 1,
             showNewJobPost: false,
-            screen: "Developers",
-            section: "Developers"
+            screen: "Home",
+            section: "10th"
         }
     },
-    beforeMount() {
-        this.reload()
+    created() {
+        this.get10thImages()
     },
     methods: {
         reload() {
@@ -139,7 +139,7 @@ export default {
         },
 
         openUpload() {
-            document.getElementById('file-field-developers').click()
+            document.getElementById('file-field-result').click()
         },
 
         selectFiles(index) {
