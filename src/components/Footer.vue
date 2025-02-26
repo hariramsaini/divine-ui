@@ -2,7 +2,7 @@
     <div class="footer">
         <h4>Contact Detail: +91-9928580651</h4>
         <div class="copyright">
-            <p><i class="fa fa-copyright" aria-hidden="true"></i> DivineEnglishAcademy 2024</p>
+            <p><i class="fa fa-copyright" aria-hidden="true"></i> DivineEnglishAcademy 2025</p>
         </div>
         <div class="logo">
             <div class="fb-logo">

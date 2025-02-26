@@ -59,6 +59,7 @@ import AdminDevelopers from './AdminDevelopers.vue';
 import AdminUm from './AdminUm.vue';
 import RecycleBin from './RecycleBin.vue';
 import Dashboard from './Dashboard.vue';
+import { hide } from '../BigFooter.vue';
 
 export default {
     name: 'TaskBoard',
@@ -80,6 +81,7 @@ export default {
         }
     },
     created() {
+        hide(false)
         if (localStorage.getItem('user') == null) {
             this.$router.push({ name: 'Admin' })
         }

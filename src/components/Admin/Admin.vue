@@ -21,6 +21,7 @@
 
 <script>
 import { login } from '@/services/UmService';
+import { hide } from '../BigFooter.vue';
 
 export default {
     name: "AdminPanel",
@@ -48,6 +49,7 @@ export default {
                     if (res != null && res.code != 500) {
                         localStorage.setItem('user', JSON.stringify(res))
                         this.$router.push({ name: 'Taskboard' })
+                        hide(false)
                     } else {
                         console.warn(res.message)
                         this.error = res.message
@@ -154,4 +156,10 @@ export default {
 }
 
 @media(min-width: 1200px) {}
+
+.error{
+    color: red;
+    font-size: larger;
+    font-weight: bold;
+}
 </style>

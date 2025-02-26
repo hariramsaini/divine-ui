@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './routes'
 import axios from 'axios'
+import { createHead } from '@vueuse/head'
 
 
 axios.interceptors.request.use(
@@ -10,7 +11,7 @@ axios.interceptors.request.use(
         //console.warn('user from interceptor:' + user)
         if (user) {
 
-            console.warn('token from interceptor:' + JSON.parse(user).token)
+            //console.warn('token from interceptor:' + JSON.parse(user).token)
             const token = JSON.parse(user).token
             config.headers.Authorization = `Bearer ${token}`;
         }
@@ -43,6 +44,7 @@ axios.interceptors.response.use(
             // } else {
             //     router.push('/admin')
             // }
+            localStorage.clear('user')
             router.push('/admin')
         } else if (status === 404) {
             router.push('/')
@@ -54,5 +56,9 @@ axios.interceptors.response.use(
     }
 );
 
+const head = createHead()
 
-createApp(App).use(router).mount('#app')
+createApp(App)
+    .use(router)
+    .use(head)
+    .mount('#app')

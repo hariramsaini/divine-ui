@@ -9,6 +9,11 @@ import JobDescription from './components/JobDescription.vue'
 import Admin from './components/Admin/Admin.vue';
 import Taskboard from './components/Admin/Taskboard.vue';
 import Dashboard from './components/Admin/Dashboard.vue';
+import PrivacyPolicy from './components/PrivacyPolicy.vue';
+import TermsConditions from './components/Terms&Conditions.vue';
+import RefunPolicy from './components/RefunPolicy.vue';
+import ContactUsComp from './components/ContactUsComp.vue';
+import JobListingUpdate from './components/Admin/JobListingUpdate.vue';
 
 const routes = [
     {
@@ -53,7 +58,7 @@ const routes = [
     },
     {
         name: 'JobDescription',
-        path: '/jobdetails',
+        path: '/jobdetails/:id',
         component: JobDescription
     },
     {
@@ -70,7 +75,32 @@ const routes = [
         name: 'Dashboard',
         path: '/dashboard',
         component: Dashboard
-    }
+    },
+    {
+        name: 'PrivacyPolicy',
+        path: '/privacy-policy',
+        component: PrivacyPolicy
+    },
+    {
+        name: 'Terms&Conditions',
+        path: '/terms-and-conditions',
+        component: TermsConditions
+    },
+    {
+        name: 'RefundPolicy',
+        path: '/refund-policy',
+        component: RefunPolicy
+    },
+    {
+        name: 'ContactUs',
+        path: '/contactus',
+        component: ContactUsComp
+    },
+    {
+        name: 'UpdateJobListed',
+        path: '/update-job-listed/:jobId',
+        component: JobListingUpdate
+    },
 ];
 
 

@@ -1,91 +1,56 @@
 <template>
     <div class="dashboard-container">
-        <TabWrapper>
-            <tab title="Admissions">
-
-                <div class="career-main" v-on:click="getAdmissionApps" v-on:wheel="getAdmissionApps"
-                    v-on:touchend="getAdmissionApps">
-                    <table>
-                        <tr class="tableH">
-                            <th>Application Id</th>
-                            <th>Student Name</th>
-                            <th>Father's Name</th>
-                            <th>Class</th>
-                            <th>Contact No</th>
-                            <th>Email</th>
-                            <th>Address</th>
-                        </tr>
-                        <tr class="tableB" v-for="item in applications" :key="item">
-                            <td>{{ item.applicationId }}</td>
-                            <td>{{ item.sName }}</td>
-                            <td>{{ item.fName }}</td>
-                            <td>{{ item.class }}</td>
-                            <td>{{ item.mobile }}</td>
-                            <td>{{ item.email }}</td>
-                            <td>{{ item.address }}</td>
-                        </tr>
-                    </table>
-                </div>
-
-            </tab>
-            <tab title="Jobs">Coming Soon</tab>
-        </TabWrapper>
+        <div>
+            <div style="display: flex;">
+                <button @click="selected('admission'), openTag('admission')" ref="admission">Admission</button>
+                <button @click="selected('jobs'), openTag('jobs')" ref="jobs">Jobs</button>
+            </div>
+            <component :is="tag"></component>
+        </div>
     </div>
 </template>
 
 <script>
-import { getAddmissionEnquiries } from '@/services/DivineService';
-import Tab from '@/Tabs/Tab.vue';
-import TabWrapper from '@/Tabs/TabWrapper.vue';
+import { defineAsyncComponent } from 'vue';
+import AdmissionApps from './AdmissionApps.vue';
 export default {
     name: 'AdminHome',
     components: {
-        Tab,
-        TabWrapper,
+        AdmissionApps
     },
     data() {
         return {
-            applications: [],
-            pageNo: 1,
-            pageSize: 30,
-            totalRecords: 0,
-            totalPages: 1
+            tag: 'AdmissionApps'
         }
     },
-    created() {
-        this.getAdmissionApps()
+    mounted() {
+        this.selected('admission')
     },
     methods: {
-        getAdmissionApps() {
-            const req = {
-                "pageNo": this.pageNo,
-                "pageSize": this.pageSize,
-                "totalRecords": this.totalRecords,
-                "searchBy": "",
-                "searchArgument": ""
-            }
-            if (this.applications.length == 0 || this.applications.length < this.totalRecords) {
-                getAddmissionEnquiries(req).then(res => {
-                    console.warn(JSON.stringify(res))
-                    if (res.status == 200) {
-                        const data = res.data.data
-                        for (let index = 0; index < data.length; index++) {
-                            this.applications.push(data[index])
-                        }
 
-                        this.totalRecords = res.data.totalRecords
-                        this.totalPages = res.data.pageCounts
-                        //console.warn("Response:  " + JSON.stringify(res.data))
-                    } else {
-                        console.warn(JSON.stringify(res.data))
-                    }
-                }).catch(error => {
-                    console.error(error);
-
-                })
+        openTag(param) {
+            if (param == 'admission') {
+                this.tag = 'AdmissionApps'
             }
-            if (this.pageNo < this.totalPages || this.pageNo == 1) {
-                this.pageNo++;
+            if (param == 'jobs') {
+                this.tag = defineAsyncComponent(() => import('./JobApplications.vue'));
+            }
+
+        },
+        selected(param) {
+            if (param == 'admission') {
+                this.$refs.admission.style.background = '#0984e3'
+                this.$refs.admission.style.color = 'white'
+
+                this.$refs.jobs.style.background = '#ddd'
+                this.$refs.jobs.style.color = 'black'
+            }
+            if (param == 'jobs') {
+                this.$refs.jobs.style.background = '#0984e3'
+                this.$refs.jobs.style.color = 'white'
+
+                this.$refs.admission.style.background = '#ddd'
+                this.$refs.admission.style.color = 'black'
             }
         }
     }
@@ -99,41 +64,17 @@ export default {
     margin-top: 10px;
 }
 
-.career-main {
-    width: 100%;
-    background-color: lightcyan;
-    max-height: calc(100vh - 300px);
-    overflow-y: auto;
-}
-
-table {
-    width: 100%;
-    border: 1px solid darkblue;
-}
-
-.tableH {
-    background: darkcyan;
-}
-
-.tableH th {
-    padding: 5px;
-    font-size: larger;
-}
-
-.tableB {
-    background: whitesmoke;
-}
-
-.tableB td {
-    padding: 10px;
-    font-size: large;
-}
-
-.tableB td a {
-    text-decoration: none;
-}
-
-.tableB td a:hover {
-    color: darkcyan;
+button {
+    border: 0px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 1px;
+    background: blue;
+    color: white;
+    margin-bottom: 10px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: 0.4s allease-out;
+    width: 120px;
 }
 </style>

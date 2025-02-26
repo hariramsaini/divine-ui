@@ -1,7 +1,7 @@
 <template>
     <div class="job">
-        <div class="head"> <i class="fa fa-window-close" aria-hidden="true" @click="fun"></i></div>
-        <h2>Job Details</h2>
+        <div class="head"> <i class="fa fa-window-close" aria-hidden="true" @click="closeFun"></i></div>
+        <h2>Update Job Details</h2>
         <div class="form">
             <label for="title">Job Title:</label>
             <input type="text" id="title" v-model="job.title">
@@ -26,6 +26,13 @@
                     {{ item.value }}
                 </option>
             </select>
+            <label for="jobType">Job Status:</label>
+            <select name="jobStatus" id="jobStatus" ref="jobStatus" v-model="job.status">
+                <option value="" disabled selected hidden>Select Job Status</option>
+                <option v-for="item in jobStatus" :key="item" :value="item.value">
+                    {{ item.value }}
+                </option>
+            </select>
             <label for="location">Location:</label>
             <select name="location" id="location" ref="location" v-model="job.employeeLocation">
                 <option value="" disabled selected hidden>Select Location</option>
@@ -42,7 +49,7 @@
             </select>
             <label for="jobDesc">Job Description</label>
             <textarea name="description" id="jobDesc" rows="10" v-model="job.description"></textarea>
-            <button @click="createNewJobListing" ref="submitBtn">Submit</button>
+            <button @click="updateJobListed">Update</button>
         </div>
     </div>
 </template>
@@ -52,9 +59,10 @@ import { createJobListing } from '@/services/DivineService';
 import { getLookupByTypeName } from '@/services/LookupService';
 
 export default {
-    name: 'JobListing',
+    name: 'JobListingUpdate',
     props: {
-        fun: Function
+        closeFun: Function,
+        listedJob: Object
     },
     data() {
         return {
@@ -63,14 +71,17 @@ export default {
             branch: [],
             location: [],
             gender: [],
+            jobStatus:[],
             job: {
+                listingId:'',
                 title: '',
                 company: '',
                 branch: '',
                 jobType: '',
                 employeeLocation: '',
                 description: '',
-                gender: ''
+                gender: '',
+                status:''
             }
         }
     },
@@ -95,19 +106,37 @@ export default {
             }).catch(error => {
                 console.error(error);
             }),
-            getLookupByTypeName({ "typeName": "JOB GENDER" }).then(res => {
+            getLookupByTypeName({ "typeName": "GENDER" }).then(res => {
                 this.gender = res;
+            }).catch(error => {
+                console.error(error);
+            }),
+            getLookupByTypeName({ "typeName": "JOB STATUS" }).then(res => {
+                this.jobStatus = res;
             }).catch(error => {
                 console.error(error);
             })
     },
+    mounted() {
+        this.job.listingId = this.listedJob.jobListingId
+        this.job.title = this.listedJob.title
+        this.job.company = this.listedJob.school
+        this.job.branch = this.listedJob.branch
+        this.job.jobType = this.listedJob.jobType
+        this.job.employeeLocation = this.listedJob.location
+        this.job.description = this.listedJob.description
+        this.job.gender = this.listedJob.gender
+        this.job.status = this.listedJob.status
+    },
     methods: {
-        createNewJobListing() {
-            this.$refs.submitBtn.disabled="true"
+        closeWindow() {
+            this.$router.push({ name: 'Home' })
+        },
+        updateJobListed() {
             createJobListing(this.job).then(res => {
                 console.warn(res)
                 if (res.code == 200) {
-                    this.fun()
+                    this.closeFun()
                 } else {
                     console.error(res.message)
                 }
@@ -126,7 +155,7 @@ export default {
         border: 2px solid lightblue;
         border-radius: 20px;
         padding: 10px;
-        max-height: 620px;
+        max-height: 580px;
         overflow-y: auto;
     }
 }
@@ -135,7 +164,7 @@ export default {
     .job {
         overflow-x: auto;
         width: -webkit-fill-available;
-        max-height: 620px;
+        max-height: 600px;
         background-color: #fff;
         border: 2px solid lightblue;
         border-radius: 5px;

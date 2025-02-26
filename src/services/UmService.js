@@ -25,7 +25,7 @@ let timeoutId;
 function handleInactive() {
     // Here you want to logout a user and/or ping your token
     console.warn("Hello Auto logout")
-    logout()
+   // logout()
 }
 
 function startTimer() { 

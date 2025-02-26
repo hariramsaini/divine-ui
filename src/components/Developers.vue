@@ -3,7 +3,8 @@
     <div class="main">
         <section class="left">
             <span>
-                <p>This web application is developed by our school students from class 5th to 8th by session 2024-25. Our
+                <p>This web application is developed by our school students from class 5th to 8th by session 2024-25.
+                    Our
                     school
                     is the one who is giving software engineering training at initial level so childern can understand
                     their
@@ -15,7 +16,8 @@
             </span>
             <span>
                 <p>
-                    यह वेब एप्लीकेशन हमारे स्कूल के कक्षा 5वीं से 8वीं तक के छात्रों द्वारा सत्र 2024-25 तक विकसित किया गया
+                    यह वेब एप्लीकेशन हमारे स्कूल के कक्षा 5वीं से 8वीं तक के छात्रों द्वारा सत्र 2024-25 तक विकसित किया
+                    गया
                     है।
                     हमारा स्कूल
                     वह है जो प्रारंभिक स्तर पर सॉफ्टवेयर इंजीनियरिंग प्रशिक्षण दे रहा है ताकि बच्चे उन्हें समझ सकें
@@ -25,7 +27,7 @@
                 </p>
             </span>
         </section>
-        <section class="dev-slider" v-on:click="getDevelopersImages" v-on:touchend="getDevelopersImages">
+        <section class="dev-slider" v-on:transitionstart="getDevelopersImages">
             <h1>Our Developers Team</h1>
             <Slider :data="developers"></Slider>
         </section>
@@ -36,6 +38,7 @@
 import { getFiles } from '@/services/DmsService';
 import HeaderComp from './Header.vue';
 import Slider from './Slider.vue';
+import { useHead } from '@vueuse/head';
 export default {
     name: 'DevelopersComp',
     components: {
@@ -94,6 +97,20 @@ export default {
                 this.pageNo++;
             }
         }
+    },
+    setup() {
+        useHead({
+            //Can be static or computed
+            title: `Developers | Divine English Academy Radhakishanpura`,
+            meta: [
+                {
+                    name: `description`,
+                    content: 'Meet the Talented Student Developers Behind Divine English Academy\'s Web Application Discover the brilliant minds of Divine Academy who brought our web application to life. Learn about our dedicated student developers, their skills, and the innovative projects they\'ve worked on. Celebrate their achievements and explore the future leaders in technology and education.',
+
+                },
+
+            ]
+        })
     }
 }
 </script>

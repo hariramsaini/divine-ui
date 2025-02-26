@@ -3,8 +3,8 @@
         <button @click="openUpload()">Upload</button>
         <button @click="deleteFile()" v-if="selectedImages.length > 0">Delete</button>
         <button @click="unselectAll()" v-if="selectedImages.length > 0">Unselect</button>
-        <input type="file" multiple accept=".jpg,.jpeg,.png" name="image" id="file-field-benefits" @change="handleFileUpload"
-            style="display: none;" ref="fileUpload">
+        <input type="file" multiple accept=".jpg,.jpeg,.png" name="image" id="file-field-benefits"
+            @change="handleFileUpload" style="display: none;" ref="fileUpload">
     </div>
     <div class="inner-container" v-on:click="getSpecialFacilityImages" v-on:scrollend="getSpecialFacilityImages"
         v-on:touchend="getSpecialFacilityImages">
@@ -30,6 +30,7 @@ export default {
             pageSize: 7,
             totalRecords: 0,
             totalPages: 1,
+            pageCount: 0,
             showNewJobPost: false,
             screen: "Home",
             section: "Special Facilities"
@@ -48,37 +49,40 @@ export default {
         },
 
         getSpecialFacilityImages() {
-            const req = {
-                "pageNo": this.pageNo,
-                "pageSize": this.pageSize,
-                "totalRecords": this.totalRecords,
-                request: { "screen": this.screen, "section": this.section }
-            }
-            if (this.specialFacilities.length == 0 || this.specialFacilities.length < this.totalRecords) {
-                getDashboardFiles(req).then(res => {
-                    if (res.status == 200) {
-                        const data = res.data.data
-                        for (let index = 0; index < data.length; index++) {
-                            if (!this.specialFacilities.includes(data[index].docId)) {
-                                this.specialFacilities.push(data[index])
+            this.pageCount++;
+            if (this.pageCount <= this.totalPages) {
+                const req = {
+                    "pageNo": this.pageNo,
+                    "pageSize": this.pageSize,
+                    "totalRecords": this.totalRecords,
+                    request: { "screen": this.screen, "section": this.section }
+                }
+                if (this.specialFacilities.length == 0 || this.specialFacilities.length < this.totalRecords) {
+                    getDashboardFiles(req).then(res => {
+                        if (res.status == 200) {
+                            const data = res.data.data
+                            for (let index = 0; index < data.length; index++) {
+                                if (!this.specialFacilities.includes(data[index].docId)) {
+                                    this.specialFacilities.push(data[index])
 
+                                }
                             }
+
+                            this.totalRecords = res.data.totalRecords
+                            this.totalPages = res.data.pageCounts
+                            //console.warn("Response:  " + JSON.stringify(res.data))
+                        } else {
+                            console.warn(JSON.stringify(res.data))
                         }
+                    }).catch(error => {
+                        console.error(error);
 
-                        this.totalRecords = res.data.totalRecords
-                        this.totalPages = res.data.pageCounts
-                        //console.warn("Response:  " + JSON.stringify(res.data))
-                    } else {
-                        console.warn(JSON.stringify(res.data))
-                    }
-                }).catch(error => {
-                    console.error(error);
+                    })
+                }
 
-                })
-            }
-
-            if (this.pageNo < this.totalPages || this.pageNo == 1) {
-                this.pageNo++;
+                if (this.pageNo < this.totalPages || this.pageNo == 1) {
+                    this.pageNo++;
+                }
             }
         },
 

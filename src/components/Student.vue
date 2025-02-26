@@ -20,6 +20,7 @@
 import axios from 'axios';
 import HeaderComp from './Header.vue';
 import Login from './Login.vue';
+import { useHead } from '@vueuse/head';
 
 export default {
     name: 'StudentComp',
@@ -50,8 +51,23 @@ export default {
                 setTimeout(() => { this.error = '' }, 5000)
             }
         }
+    },
+    setup() {
+        useHead({
+            //Can be static or computed
+            title: `Student Portal | Divine English Academy Radhakishanpura`,
+            meta: [
+                {
+                    name: `description`,
+                    content: 'Welcome to Divine English Academy\'s Student Portal - Connect, Track, and Succeed Our student portal at Divine English Academy provides a comprehensive and user-friendly platform for students and parents. Login to access detailed progress reports, academic resources, and stay connected with teachers anytime. Empowering students to achieve their best and keeping parents informed every step of the way.',
+
+                },
+
+            ]
+        })
     }
 }
+
 </script>
 
 <style scoped>
@@ -59,8 +75,9 @@ export default {
     color: red;
 }
 
-h1{
-    color: #3F51B5;;
+h1 {
+    color: #3F51B5;
+    ;
 }
 
 @media(min-width: 1200px) {

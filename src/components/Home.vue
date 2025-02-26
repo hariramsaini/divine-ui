@@ -3,12 +3,13 @@
     <div class="main">
         <div style="height: 5px;"></div>
         <div class="left">
-            <section class="slider10th" v-show="class10th.array.length>0" v-on:click="getResultImages" v-on:touchend="getResultImages">
+            <section class="slider10th" v-show="class10th.array.length > 0" v-on:transitionstart="getResultImages">
                 <h1>Results</h1>
                 <Slider :data="class10th"></Slider>
             </section>
             <!-- <section class="slider10th" v-on:click="getBenefitsImages" v-on:wheel="getBenefitsImages" v-on:touchend="getBenefitsImages"> -->
-            <section class="slider10th"  v-show="specialFacilities.array.length>0" v-on:click="getBenefitsImages" v-on:touchend="getBenefitsImages">
+            <section class="slider10th" v-show="specialFacilities.array.length > 0"
+                v-on:transitionstart="getBenefitsImages">
                 <h1>Special Benefits</h1>
                 <Slider :data="specialFacilities"></Slider>
             </section>
@@ -170,7 +171,6 @@ export default {
                 slideFor: 'student',
                 array: []
             },
-            session: '2023 - 24',
             pageNo: 1,
             pageSize: 2,
             totalRecords: 0,
@@ -180,12 +180,24 @@ export default {
             benefitsTotalPages: 1
         }
     },
+    metaInfo() {
+        return {
+            title: 'Divine Academy Sikar',
+            meta: [
+                {
+                    name: 'description',
+                    content: 'Divine English Academy, Sikar Rajasthan'
+                }
+            ]
+        }
+    },
     beforeMount() {
         this.reload()
     },
     methods: {
         reload() {
             this.getResultImages()
+            this.getBenefitsImages()
         },
         getResultImages() {
             const req = {
@@ -216,8 +228,6 @@ export default {
 
             if (this.pageNo < this.totalPages || this.pageNo == 1) {
                 this.pageNo++;
-
-                this.getBenefitsImages()
             }
         },
         getBenefitsImages() {

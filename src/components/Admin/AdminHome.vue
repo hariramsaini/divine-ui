@@ -8,20 +8,24 @@
                         <Results></Results>
                     </tab>
                     <tab title="Special Benefits" class="result">
-                        <SpecialBenefits></SpecialBenefits>
+                        <component :is="SpecialBenefits" v-if="true"></component>
                     </tab>
                 </TabWrapper>
             </tab>
             <tab title="Careers">
                 <Div class="careers">
-                    <button @click="showNewJobPost = true">Post New Job</button>
+                    <button @click="showNewJobPost = !showNewJobPost" v-show="!showNewJobPost">Post New Job</button>
+                    <div>
+                        <component :is="JobsListed" v-if="!showNewJobPost" :funHideNewPostButton="hideNewJobPosting">
+                        </component>
+                    </div>
                     <div>
                         <JobListing :fun="hideNewJobPosting" v-show="showNewJobPost"></JobListing>
                     </div>
                 </Div>
             </tab>
             <tab title="Developers">
-                <AdminDevelopers></AdminDevelopers>
+                <component :is="AdminDevelopers" v-if="true"></component>
             </tab>
         </TabWrapper>
     </div>
@@ -32,8 +36,7 @@ import Tab from '@/Tabs/Tab.vue';
 import TabWrapper from '@/Tabs/TabWrapper.vue';
 import JobListing from './JobListing.vue';
 import Results from './Results.vue';
-import SpecialBenefits from './SpecialBenefits.vue';
-import AdminDevelopers from './AdminDevelopers.vue';
+import { defineAsyncComponent } from 'vue';
 
 export default {
     name: 'AdminHome',
@@ -42,14 +45,33 @@ export default {
         TabWrapper,
         JobListing,
         Results,
-        SpecialBenefits,
-        AdminDevelopers
+
     },
     data() {
         return {
-            showNewJobPost: false
+            showNewJobPost: false,
+            SpecialBenefits: '',
+            JobsListed: '',
+            AdminDevelopers: ''
         }
     },
+    methods: {
+        hideNewJobPosting() {
+            this.showNewJobPost = !this.showNewJobPost
+        }
+    },
+    created() {
+        // Lazy Loading Components
+        setTimeout(() => {
+            this.SpecialBenefits = defineAsyncComponent(() => import('./SpecialBenefits.vue'));
+        }, 1000);
+        setTimeout(() => {
+            this.JobsListed = defineAsyncComponent(() => import('./JobsListed.vue'));
+        }, 2000);
+        setTimeout(() => {
+            this.AdminDevelopers = defineAsyncComponent(() => import('./AdminDevelopers.vue'));
+        }, 2000);
+    }
 
 }
 </script>
