@@ -11,7 +11,7 @@
 </template>
 
 <script>
-//import { defineAsyncComponent } from 'vue';
+import { defineAsyncComponent } from 'vue';
 import UsersComp from './UsersComp.vue';
 export default {
     name: 'AdminUm',
@@ -33,7 +33,7 @@ export default {
                 this.tag = 'UsersComp'
             }
             if (param == 'roles') {
-                //this.tag = defineAsyncComponent(() => import('./JobApplications.vue'));
+                this.tag = defineAsyncComponent(() => import('./RolesComp.vue'));
             }
 
         },

@@ -1,6 +1,6 @@
 <template>
 
-    <div class="career-main" v-on:click="getAdmissionApps" v-on:wheel="getAdmissionApps"
+    <div class="jobs-main" v-on:click="getAdmissionApps" v-on:wheel="getAdmissionApps"
         v-on:touchend="getAdmissionApps">
 
         <table>
@@ -144,7 +144,7 @@ export default {
     margin-top: 10px;
 }
 
-.career-main {
+.jobs-main {
     width: 100%;
     background-color: lightcyan;
     max-height: calc(100vh - 300px);

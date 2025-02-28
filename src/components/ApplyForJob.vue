@@ -1,7 +1,7 @@
 <template>
     <div v-if="show" class="applyJob">
         <div class="head"> <i class="fa fa-window-close" aria-hidden="true" @click="closeFun(null)"></i></div>
-        <h1>Apply For {{ job.jobType }}</h1>
+        <h1 style="color:darkblue">Apply For {{ job.title }}</h1>
         <label for="fName">Full Name:</label>
         <input type="text" id="fName" ref="fullName" v-model="app.fullName">
         <div class="file" style="margin-top: 10px;">
@@ -305,7 +305,7 @@ select {
 
 button {
     width: 90px;
-    margin-top: 10px;
+    margin-top: 0px;
     height: 35px;
     padding: 5px;
     border: none;
@@ -316,6 +316,7 @@ button {
     border-radius: 20px;
     margin-right: 20px;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .head {

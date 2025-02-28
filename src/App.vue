@@ -26,7 +26,7 @@ export default {
     const siteData = reactive({
       title: 'Divine English Academy Radhakishanpura',
       //description: 'Divine Enligh Academy Radhakishanpura, Sikar (Rajasthan). Giving Computer Engineering Training to school Students and this web application is developed by 8th class students.'
-      description:'Welcome to Divine English Academy - Your Gateway to Quality Education Discover Divine English Academy\'s innovative web application, where students, parents, and teachers connect seamlessly. Access academic resources, track progress, and stay updated with the latest school events. Join us in nurturing excellence and fostering a bright future.'
+      description: 'Welcome to Divine English Academy - Your Gateway to Quality Education Discover Divine English Academy\'s innovative web application, where students, parents, and teachers connect seamlessly. Access academic resources, track progress, and stay updated with the latest school events. Join us in nurturing excellence and fostering a bright future.'
     })
 
     useHead({
@@ -53,6 +53,12 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 body {

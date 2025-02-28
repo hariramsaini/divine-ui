@@ -11,7 +11,14 @@
         <div class="login">
             <h1>Login</h1>
             <input type="text" placeholder="Enter username" v-model.trim="login.userName">
-            <input type="password" placeholder="Enter password" v-model.trim="login.userPassword">
+            <div class="password">
+                <input type="password" id="password" placeholder="Enter password" v-model.trim="login.userPassword">
+                <div class="icon">
+                    <i class="fa fa-eye-slash" aria-hidden="true" v-if="!showPassword"
+                        @click="displayPassword('show')"></i>
+                    <i class="fa fa-eye" aria-hidden="true" v-else @click="displayPassword('')"></i>
+                </div>
+            </div>
             <button ref="login" v-on:click="loginFun()">Login</button>
         </div>
 
@@ -31,7 +38,8 @@ export default {
                 userName: null,
                 userPassword: null
             },
-            error: ''
+            error: '',
+            showPassword: false
         }
     },
     created() {
@@ -61,6 +69,16 @@ export default {
                 this.error = null
             }, 2000)
 
+        },
+
+        displayPassword(param) {
+            this.showPassword = !this.showPassword
+            const pass = document.getElementById('password')
+            if (param == 'show') {
+                pass.type = 'text'
+            } else {
+                pass.type = 'password'
+            }
         }
     }
 }
@@ -127,6 +145,7 @@ export default {
     font-weight: bold;
     color: #182b5c;
     margin-bottom: 30px;
+    cursor: pointer;
 }
 
 .login button:hover {
@@ -147,19 +166,50 @@ export default {
         margin-bottom: 0;
     }
 
-    h1{
+    h1 {
         margin: 0;
     }
-    .header{
+
+    .header {
         margin-bottom: 5px;
     }
 }
 
 @media(min-width: 1200px) {}
 
-.error{
+.error {
     color: red;
     font-size: larger;
     font-weight: bold;
+}
+
+i {
+    color: darkorange;
+    font-size: x-large;
+    margin-left: 5px;
+}
+
+.password {
+    display: flex;
+    width: 93%;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.password input {
+    width: 80%;
+    height: 20px;
+    padding: 10px;
+    font-size: larger;
+    border: 2px solid #27739c;
+    border-radius: 20px;
+    margin-bottom: 10%;
+}
+
+.icon {
+    width: 20px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
 }
 </style>

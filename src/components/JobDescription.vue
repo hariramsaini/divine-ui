@@ -4,9 +4,9 @@
             <h1>Job Description</h1>
             <div class="details" v-if="job != ''">
                 <div class="row">
-                    <h2>Job Title: </h2>
+                    <h3>Title: </h3>
                     <pre> </pre>
-                    <p> {{ job.jobType }}</p>
+                    <p> {{ job.title }}</p>
                 </div>
                 <div class="row">
                     <h3>School: </h3>
@@ -41,7 +41,7 @@
                     <p class="successP" ref="success"> Applied Successfully. We will get back soon. </p>
                 </div>
             </div>
-            <router-link to="/careers">Back to Careers</router-link>
+            <router-link to="/careers" class="backToCareer">Back to Careers</router-link>
         </div>
         <component :is="tab" v-if="!showDesc" :closeFun="closeApplyWindow" :job="job"></component>
     </div>
@@ -106,7 +106,7 @@ export default {
 <style scoped>
 .main {
     width: 100%;
-    padding: 140px;
+    /* padding: 140px; */
     display: flex;
     flex-direction: column;
     border: 2px solid cadetblue;
@@ -122,6 +122,7 @@ export default {
     display: flex;
     align-items: flex-start;
     flex-direction: column;
+    padding: 20px;
 }
 
 .details label {
@@ -131,19 +132,20 @@ export default {
 .details button {
     margin-top: 20px;
     margin-bottom: 20px;
-    border: 1px solid blue;
-    background-color: blue;
+    border: 1px;
+    background-color: cornflowerblue;
     color: white;
     font-weight: bold;
     width: 100px;
     font-size: larger;
     border-radius: 20px;
     padding: 5px;
+    cursor: pointer;
 }
 
 .details textarea {
     margin: 10px;
-    width: 520px;
+    width: 60%;
     height: 100px;
     max-height: 200px;
     overflow-x: auto;
@@ -154,7 +156,7 @@ export default {
     border: 2px solid cadetblue;
 }
 
-.details a {
+a {
     font-size: x-large;
 }
 

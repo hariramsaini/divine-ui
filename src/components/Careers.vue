@@ -58,7 +58,7 @@ export default {
     },
     methods: {
         getListedJobs() {
-            console.warn('this is careers comp')
+            //console.warn('this is careers comp')
             const req = {
                 "pageNo": this.pageNo,
                 "pageSize": this.pageSize,
@@ -108,7 +108,7 @@ export default {
 }
 
 .career-header h1 {
-    color: #3F51B5;
+    color: darkblue;
 }
 
 @media(max-width: 1200px) {
@@ -124,36 +124,6 @@ export default {
     justify-content: space-around;
 }
 
-table {
-    width: 100%;
-    border: 1px solid darkblue;
-}
-
-.tableH {
-    background: darkcyan;
-}
-
-.tableH th {
-    padding: 5px;
-    font-size: larger;
-}
-
-.tableB {
-    background: whitesmoke;
-}
-
-.tableB td {
-    padding: 10px;
-    font-size: large;
-}
-
-.tableB td a {
-    text-decoration: none;
-}
-
-.tableB td a:hover {
-    color: darkcyan;
-}
 
 .jobs {
     display: flex;
@@ -184,13 +154,20 @@ table {
 
 .job-tiles h4 {
     margin: 2px;
+    margin-bottom: 5px;
 }
 
 a :hover {
-    background: lightblue;
+    background: white;
+    color: darkblue;
 }
 
 a {
     text-decoration: none;
+    background: darkblue;
+    border-radius: 20px;
+    padding: 5px;
+    margin: 10px;
+    color: white;
 }
 </style>

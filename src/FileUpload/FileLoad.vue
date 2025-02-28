@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import base_url from '@/data-types';
+import dataTtype from '@/data-types';
 import { uploadFiles } from '@/services/DmsService';
 import axios from 'axios';
 
@@ -141,8 +141,8 @@ export default {
                                 section: this.section,
                                 files: this.files
                             }
-                            console.warn(base_url + this.url)
-                            const result = await axios.post(base_url + this.url, JSON.stringify(this.requestPayload), {
+                            console.warn(dataTtype.base_url + this.url)
+                            const result = await axios.post(dataTtype.base_url + this.url, JSON.stringify(this.requestPayload), {
                                 headers: {
                                     'Content-Type': 'application/json',
                                 },

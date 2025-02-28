@@ -5,11 +5,11 @@
             <h5>One of Shkahawati's largest educational conglomerates, fostering excellence and shaping success stories
                 across
                 India since 2014.</h5>
-            <div>
+            <div class="privacyPolicy">
                 <router-link to="/privacy-policy" class="link" target="_blank">Privacy Policy</router-link>
-                <a style="color: #FF6000;">|</a>
+                <a class="bar">|</a>
                 <router-link to="/terms-and-conditions" class="link" target="_blank">Terms & Conditions</router-link>
-                <a style="color: #FF6000;">|</a>
+                <a class="bar">|</a>
                 <router-link to="/refund-policy" class="link" target="_blank">Refund Policy</router-link>
             </div>
         </div>
@@ -18,7 +18,7 @@
                 <h1>Contact Us</h1>
 
                 <div style="display: flex;align-items: baseline;">
-                    <i class="fa fa-map-marker" aria-hidden="true"> </i>
+                    <i class="fa fa-map-marker i-button" aria-hidden="true" @click="openApp('', 'map')"> </i>
                     <div>
                         <p>Radhakishan Pura,</p>
                         <p>Sikar,</p>
@@ -27,14 +27,15 @@
                 </div>
 
                 <div style="display: flex;align-items: baseline;">
-                    <i class="fa fa-phone" aria-hidden="true"></i>
+                    <i class="fa fa-phone i-button" aria-hidden="true" @click="openApp('+91-9928580651', 'phone')"></i>
                     <div>
                         <p>+91-9928580651</p>
                     </div>
                 </div>
 
                 <div style="display: flex;align-items: baseline;">
-                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                    <i class="fa fa-envelope-o i-button" aria-hidden="true"
+                        @click="openApp('info@divineacademy.link', 'mail')"></i>
                     <p>info@divineacademy.link</p>
                 </div>
             </div>
@@ -62,6 +63,24 @@ export default {
     data() {
         return {
             show: true
+        }
+    },
+    methods: {
+        openApp(param, type) {
+            console.warn(param)
+            if (type == 'phone') {
+                document.location.href = "tel:" + param;
+            }
+            if (type == 'mail') {
+                window.location.href = "mailto:" + param + '?subject=Subject&body=message%20goes%20here';
+            }
+            if (type == 'map') {
+                const a = document.createElement('a')
+                a.href  = "https://www.google.com/maps/place/Divine+English+Academy,+Radhakishanpura+Sikar/@27.6091207,75.1608197,17z/data=!4m15!1m8!3m7!1s0x396cbb37dc1d8643:0x91151b0cc6679b3d!2sDivine+English+Academy,+Radhakishanpura+Sikar!8m2!3d27.6091207!4d75.1633946!10e1!16s%2Fg%2F11d_1bgdq2!3m5!1s0x396cbb37dc1d8643:0x91151b0cc6679b3d!8m2!3d27.6091207!4d75.1633946!16s%2Fg%2F11d_1bgdq2?entry=ttu&g_ep=EgoyMDI1MDIyNS4wIKXMDSoASAFQAw%3D%3D"
+                a.target = '_blank'
+                a.click()
+            }
+
         }
     }
 }
@@ -100,23 +119,12 @@ export function hide() {
         display: flex;
     }
 
-    .footer-level-1 h1,
-    i {
-        color: #FF6000;
-    }
-
     .footer-level-1 p {
         color: white;
         font-size: x-large;
         text-decoration: none;
     }
 
-    .footer-level-1 a {
-        color: white;
-        font-size: x-large;
-        text-decoration: none;
-        margin-top: 25px;
-    }
 
     .footerHead {
         display: flex;
@@ -129,6 +137,12 @@ export function hide() {
         text-decoration: none;
         font-size: x-large;
     }
+
+    .privacyPolicy {}
+
+    .privacyPolicy .bar {
+        color: #FF6000;
+    }
 }
 
 @media(max-width: 1200px) {
@@ -137,18 +151,50 @@ export function hide() {
         display: grid;
         justify-content: space-around;
         justify-items: center;
+        padding: 10px;
+        margin-bottom: 90px;
+        color: white;
+        min-height: 737px;
     }
 
     .footer h4 {
+        color: white;
+        font-size: xx-large;
+        margin: 1px;
         text-align: center;
         margin-bottom: 0;
         margin-top: 5px;
+    }
+
+    .footer h5 {
+        text-align: center;
+        margin: 0;
+        color: white;
+        line-height: 15px;
+        font-weight: lighter;
+        line-height: 30px;
     }
 
     .copyright {
         text-align: center;
         color: lightgrey;
         margin-bottom: 0;
+    }
+
+    .footerHead a {
+        color: white;
+        text-decoration: none;
+        font-size: x-large;
+    }
+
+    .privacyPolicy {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .privacyPolicy .bar {
+        display: none;
     }
 }
 
@@ -178,5 +224,22 @@ i {
 
 a {
     margin-right: 10px;
+}
+
+.footer-level-1 h1,
+i {
+    color: #FF6000;
+}
+
+.footer-level-1 a {
+    color: white;
+    font-size: x-large;
+    text-decoration: none;
+    margin-top: 25px;
+    margin-top: 10px;
+}
+
+.i-button{
+    cursor: pointer;
 }
 </style>

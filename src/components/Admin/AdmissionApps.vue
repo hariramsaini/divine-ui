@@ -1,5 +1,5 @@
 <template>
-    <div class="career-main" v-on:click="getAdmissionApps" v-on:wheel="getAdmissionApps"
+    <div class="admission-main" v-on:click="getAdmissionApps" v-on:wheel="getAdmissionApps"
         v-on:touchend="getAdmissionApps">
         <table>
             <tr class="tableH">
@@ -87,7 +87,7 @@ export default {
 </script>
 
 <style scoped>
-.career-main {
+.admission-main {
     width: 100%;
     background-color: lightcyan;
     max-height: calc(100vh - 300px);

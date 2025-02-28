@@ -1,6 +1,6 @@
 <template>
     <div class="footer">
-        <h4>Contact Detail: +91-9928580651</h4>
+        <h4 class="contact">Contact Detail: +91-9928580651</h4>
         <div class="copyright">
             <p><i class="fa fa-copyright" aria-hidden="true"></i> DivineEnglishAcademy 2025</p>
         </div>
@@ -71,6 +71,10 @@ export default {
         text-align: center;
         color: lightgrey;
         margin-bottom: 0;
+    }
+
+    .contact {
+        display: none;
     }
 }
 
