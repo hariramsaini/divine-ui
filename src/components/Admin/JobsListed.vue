@@ -23,7 +23,8 @@
         </div>
     </div>
     <div>
-        <component :is="updatedJobcomp" v-if="show" :closeFun="closeWindow" :listedJob="job">
+        <component :is="updatedJobcomp" v-if="show" :hideNewJobBtn="funHideNewPostButton" :closeUpdate="closeWindow"
+            :listedJob="job">
         </component>
     </div>
 </template>
@@ -94,18 +95,23 @@ export default {
                 }
             }
         },
+
         closeWindow() {
             this.jobs = []
             this.pageNo = 1
             this.totalRecords = 0
             this.totalPages = 1
+            this.pageCount= 0,
             this.getListedJobs()
             this.show = false
+            console.warn('update closed')
         },
+
         openUpdate(job) {
             this.show = true
             this.job = job
             this.updatedJobcomp = defineAsyncComponent(() => import('./JobListingUpdate.vue'));
+            this.funHideNewPostButton()
         }
     }
 }

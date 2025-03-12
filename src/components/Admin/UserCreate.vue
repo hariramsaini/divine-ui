@@ -1,9 +1,9 @@
 <template>
-    <div class="userCreate">
+    <div class="userCreate" ref="userCreate">
         <div class="head"> <i class="fa fa-window-close" aria-hidden="true" @click="closeWindow()"></i></div>
         <div class="userCreate-level-1">
             <h1>Add New User</h1>
-            <div class="userForm">
+            <div class="userForm" ref="userForm">
                 <div class="left">
                     <label for="userName">Username:</label>
                     <input type="text" v-model="userVo.userName" required>
@@ -73,6 +73,7 @@
                     <select name="city" id="city" v-model="userVo.city">
                         <option v-for="item2 in city" :key="item2" :value="item2.value">{{ item2.value }}</option>
                     </select>
+                    <p v-if="error != ''" style="color: red; font-size: larger;">{{ error }}</p>
                     <div><button @click="addUser()">Submit</button></div>
                 </div>
             </div>
@@ -81,6 +82,7 @@
 </template>
 
 <script>
+import dataTtype from '@/data-types';
 import { getLookupByValueMap } from '@/services/LookupService';
 import { addOrUpdateUser, getAllActiveRoles } from '@/services/UmService';
 import moment from 'moment';
@@ -121,11 +123,15 @@ export default {
             },
             city: [],
             showPassword: false,
-            maxDate: new Date('2023-12-31')
+            maxDate: new Date('2023-12-31'),
+            error: ''
         }
     },
     created() {
         this.getRoles();
+    },
+    mounted() {
+        this.setHeight('userForm')
     },
     methods: {
         addUser() {
@@ -135,10 +141,14 @@ export default {
             addOrUpdateUser(this.userVo).then(res => {
                 const data = res.data;
                 if (res.status == 200 && data.code == 201) {
-                    console.info(res)
                     this.closeWindow('addUser')
                 } else {
-                    console.error(res.message)
+                    console.error("this.error " + data.message)
+                    this.error = data.message
+
+                    setTimeout((() => {
+                        this.error = ''
+                    }), 5000)
                 }
             }).catch(e => {
                 console.error(e)
@@ -187,10 +197,29 @@ export default {
             } else {
                 this.userVo.fullName = this.userVo.firstName + ' ' + this.userVo.middleName + ' ' + this.userVo.lastName
             }
+        },
+
+        setHeight(param) {
+            const height = dataTtype.screen.height;
+            if (height <= 667) {
+                this.$refs[param].style.maxHeight = '370px'
+            }
+            if (height > 667 && height <= 750) {
+                this.$refs[param].style.height = '420px'
+            }
+            if (height > 750 && height <= 873) {
+                this.$refs[param].style.height = '430px'
+            }
+            if (height > 873 && height <= 900) {
+                this.$refs[param].style.height = '510px'
+            }
+            if (height > 900 && height <= 950) {
+                this.$refs[param].style.height = '590px'
+            }
         }
     },
 
-    watch:{
+    watch: {
         'userVo.mobile': function (currentVal, previousVal) {
             if (String(currentVal).length > 10) {
                 this.userVo.mobile = previousVal

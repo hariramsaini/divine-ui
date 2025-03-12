@@ -6,8 +6,8 @@
         <input type="file" multiple accept=".jpg,.jpeg,.png" name="image" id="file-field-benefits"
             @change="handleFileUpload" style="display: none;" ref="fileUpload">
     </div>
-    <div class="inner-container" v-on:click="getSpecialFacilityImages" v-on:scrollend="getSpecialFacilityImages"
-        v-on:touchend="getSpecialFacilityImages">
+    <div class="inner-container" ref="inner-container" v-on:click="getSpecialFacilityImages"
+        v-on:scrollend="getSpecialFacilityImages" v-on:touchend="getSpecialFacilityImages">
         <div v-for="(item, index) in specialFacilities" :key="item">
             <img :src="`data:image/png;base64,${item.base64}`" alt="" ref="img" v-on:click="selectFiles(index)">
             <input type="checkbox" :value="item.fileId" v-model="selectedImages" ref="myCheckbox">
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import dataTtype from '@/data-types';
 import { deleteFiles, getDashboardFiles, uploadFiles } from '@/services/DmsService';
 
 export default {
@@ -38,6 +39,10 @@ export default {
     },
     beforeMount() {
         this.reload()
+    },
+    mounted() {
+
+        this.setHeight('inner-container')
     },
     methods: {
         reload() {
@@ -168,6 +173,25 @@ export default {
 
         hideNewJobPosting() {
             this.showNewJobPost = false
+        },
+
+        setHeight(param) {
+            const height = dataTtype.screen.height;
+            if (height <= 667) {
+                this.$refs[param].style.maxHeight = '280px'
+            }
+            if (height > 667 && height <= 750) {
+                this.$refs[param].style.height = '330px'
+            }
+            if (height > 750 && height <= 873) {
+                this.$refs[param].style.height = '360px'
+            }
+            if (height > 873 && height <= 900) {
+                this.$refs[param].style.height = '500px'
+            }
+            if (height > 900 && height <= 950) {
+                this.$refs[param].style.height = '510px'
+            }
         }
     }
 }
@@ -188,15 +212,17 @@ section {
     margin: 20px;
 }
 
-.inner-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    overflow-y: auto;
-    /* Enable vertical scrolling */
-    max-height: 500px;
-    width: 100%s;
+@media(min-width: 1200px) {
+    .inner-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        overflow-y: auto;
+        /* Enable vertical scrolling */
+        /* max-height: 500px; */
+        width: 100%s;
+    }
 }
 
 @media(max-width: 1200px) {
@@ -207,7 +233,7 @@ section {
         align-items: center;
         overflow-y: auto;
         /* Enable vertical scrolling */
-        max-height: 530px;
+        max-height: 630px;
         width: 100%s;
     }
 }
@@ -235,15 +261,6 @@ section {
 .header button:hover {
     background-color: sandybrown;
     color: black;
-}
-
-.home {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border: 1px solid lightblue;
-    border-radius: 10px;
-    width: 100%;
 }
 
 .btn-upload {

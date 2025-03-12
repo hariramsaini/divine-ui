@@ -1,6 +1,7 @@
 <template>
-    <div class="job">
-        <div class="head"> <i class="fa fa-window-close" aria-hidden="true" @click="closeFun"></i></div>
+    <div class="job" ref="job">
+        <div class="head"> <i class="fa fa-window-close" aria-hidden="true" @click="closeUpdate(), hideNewJobBtn()"></i>
+        </div>
         <h2>Update Job Details</h2>
         <div class="form">
             <label for="title">Job Title:</label>
@@ -50,18 +51,22 @@
             <label for="jobDesc">Job Description</label>
             <textarea name="description" id="jobDesc" rows="10" v-model="job.description"></textarea>
             <button @click="updateJobListed">Update</button>
+
+            {{ screen }}
         </div>
     </div>
 </template>
 
 <script>
+import dataTtype from '@/data-types';
 import { createJobListing } from '@/services/DivineService';
 import { getLookupByTypeName } from '@/services/LookupService';
 
 export default {
     name: 'JobListingUpdate',
     props: {
-        closeFun: Function,
+        closeUpdate: Function,
+        hideNewJobBtn: Function,
         listedJob: Object
     },
     data() {
@@ -71,9 +76,9 @@ export default {
             branch: [],
             location: [],
             gender: [],
-            jobStatus:[],
+            jobStatus: [],
             job: {
-                listingId:'',
+                listingId: '',
                 title: '',
                 company: '',
                 branch: '',
@@ -81,8 +86,9 @@ export default {
                 employeeLocation: '',
                 description: '',
                 gender: '',
-                status:''
-            }
+                status: ''
+            },
+            screen: dataTtype.screen.height
         }
     },
     created() {
@@ -127,6 +133,8 @@ export default {
         this.job.description = this.listedJob.description
         this.job.gender = this.listedJob.gender
         this.job.status = this.listedJob.status
+
+      this.setHeight('job')
     },
     methods: {
         closeWindow() {
@@ -136,13 +144,29 @@ export default {
             createJobListing(this.job).then(res => {
                 console.warn(res)
                 if (res.code == 200) {
-                    this.closeFun()
+                    this.closeUpdate(), this.hideNewJobBtn()
                 } else {
                     console.error(res.message)
                 }
             }).catch(e => {
                 console.error(e)
             })
+        },
+
+        setHeight(param) {
+            const height = dataTtype.screen.height;
+            if (height <= 667) {
+                this.$refs[param].style.height = '380px'
+            }
+            if (height > 667 && height <= 750) {
+                this.$refs[param].style.height = '480px'
+            }
+            if (height > 750 && height <= 873) {
+                this.$refs[param].style.height = '500px'
+            }
+            if (height > 873 && height <= 950) {
+                this.$refs[param].style.height = '660px'
+            }
         }
     }
 }
@@ -164,7 +188,7 @@ export default {
     .job {
         overflow-x: auto;
         width: -webkit-fill-available;
-        max-height: 600px;
+        max-height: 670px;
         background-color: #fff;
         border: 2px solid lightblue;
         border-radius: 5px;

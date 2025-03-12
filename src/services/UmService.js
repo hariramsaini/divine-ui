@@ -36,6 +36,19 @@ export async function addOrUpdateUser(req) {
     const result = await axios.post(dataTtype.base_url + '/um/updateUser', req)
     return result;
 }
+
+export async function deleteUserById(req) {
+    const result = await axios.post(dataTtype.base_url + '/um/deleteUser', req)
+    return result;
+}
+
+
+
+
+
+
+
+
 //Auto Logout
 const timeoutInMS = 300000; // 3 minutes -> 3 * 60s * 1000ms
 let timeoutId;

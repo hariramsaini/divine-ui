@@ -1,6 +1,6 @@
 <template>
-    <div class="job">
-        <div class="head"> <i class="fa fa-window-close" aria-hidden="true" @click="fun"></i></div>
+    <div class="job" ref="job">
+        <div class="head"> <i class="fa fa-window-close" aria-hidden="true" @click="fun('newJob')"></i></div>
         <h2>Job Details</h2>
         <div class="form">
             <label for="title">Job Title:</label>
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import dataTtype from '@/data-types';
 import { createJobListing } from '@/services/DivineService';
 import { getLookupByTypeName } from '@/services/LookupService';
 
@@ -71,7 +72,7 @@ export default {
                 employeeLocation: '',
                 description: '',
                 gender: ''
-            }
+            },
         }
     },
     created() {
@@ -79,42 +80,63 @@ export default {
             this.jobTypes = res;
         }).catch(error => {
             console.error(error);
-        }),
-            getLookupByTypeName({ "typeName": "COMPANY" }).then(res => {
-                this.company = res;
-            }).catch(error => {
-                console.error(error);
-            }),
-            getLookupByTypeName({ "typeName": "BRANCH" }).then(res => {
-                this.branch = res;
-            }).catch(error => {
-                console.error(error);
-            }),
-            getLookupByTypeName({ "typeName": "EMPLOYEE LOCATION" }).then(res => {
-                this.location = res;
-            }).catch(error => {
-                console.error(error);
-            }),
-            getLookupByTypeName({ "typeName": "JOB GENDER" }).then(res => {
-                this.gender = res;
-            }).catch(error => {
-                console.error(error);
-            })
+        });
+        getLookupByTypeName({ "typeName": "COMPANY" }).then(res => {
+            this.company = res;
+        }).catch(error => {
+            console.error(error);
+        });
+        getLookupByTypeName({ "typeName": "BRANCH" }).then(res => {
+            this.branch = res;
+        }).catch(error => {
+            console.error(error);
+        });
+        getLookupByTypeName({ "typeName": "EMPLOYEE LOCATION" }).then(res => {
+            this.location = res;
+        }).catch(error => {
+            console.error(error);
+        });
+        getLookupByTypeName({ "typeName": "JOB GENDER" }).then(res => {
+            this.gender = res;
+        }).catch(error => {
+            console.error(error);
+        });
+
+    },
+    mounted(){
+        this.setHeight('job')
     },
     methods: {
         createNewJobListing() {
-            this.$refs.submitBtn.disabled="true"
+            this.$refs.submitBtn.disabled = "true"
             createJobListing(this.job).then(res => {
                 console.warn(res)
                 if (res.code == 200) {
-                    this.fun()
+                    this.fun('newJob')
                 } else {
                     console.error(res.message)
                 }
             }).catch(e => {
                 console.error(e)
             })
+        },
+
+        setHeight(param) {
+            const height = dataTtype.screen.height;
+            if (height <= 667) {
+                this.$refs[param].style.height = '380px'
+            }
+            if (height > 667 && height <= 750) {
+                this.$refs[param].style.height = '480px'
+            }
+            if (height > 750 && height <= 873) {
+                this.$refs[param].style.height = '500px'
+            }
+            if (height > 873 && height <= 950) {
+                this.$refs[param].style.height = '660px'
+            }
         }
+
     }
 }
 </script>
@@ -135,7 +157,7 @@ export default {
     .job {
         overflow-x: auto;
         width: -webkit-fill-available;
-        max-height: 620px;
+        max-height: 670px;
         background-color: #fff;
         border: 2px solid lightblue;
         border-radius: 5px;

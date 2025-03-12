@@ -27,7 +27,7 @@
                     <td>
                         <div style="display: flex;">
                             <button @click="getComponent('userUpdate', item)">Update</button>
-                            <button class="delete">Delete</button>
+                            <button class="delete" @click="deleteUser(item.userId)">Delete</button>
                         </div>
                     </td>
                 </tr>
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { getAllActiveRoles, getAllUsers, getDesignations } from '@/services/UmService';
+import { deleteUserById, getAllActiveRoles, getAllUsers, getDesignations } from '@/services/UmService';
 import { defineAsyncComponent } from 'vue';
 import UserUpdate from './UserUpdate.vue';
 import { getLookupByTypeName } from '@/services/LookupService';
@@ -62,7 +62,7 @@ export default {
                 states: [],
                 salutations: [],
                 genders: [],
-
+                userStatus:[]
             }
         }
     },
@@ -123,7 +123,7 @@ export default {
 
         closeComponent(param) {
             if (param != '' || param != null) {
-                getAllUsers()
+                this.getAllUsers()
             }
             this.showUpdate = !this.showUpdate
         },
@@ -161,11 +161,35 @@ export default {
             }).catch(error => {
                 console.error(error);
             })
+            getLookupByTypeName({ "typeName": "status" }).then(res => {
+                this.obj.userStatus = res;
+            }).catch(error => {
+                console.error(error);
+            })
             getLookupByTypeName({ "typeName": "SALUTATION" }).then(res => {
                 this.obj.salutations = res;
             }).catch(error => {
                 console.error(error);
             })
+        },
+
+        deleteUser(userId) {
+            if (confirm('Are you sure to delete this user?')) {
+                const req = {
+                    "userId": userId
+                }
+
+                deleteUserById(req).then(res => {
+                    if (res.status == 200) {
+                        console.warn(res.data)
+                        this.getAllUsers();
+                    } else {
+                        console.warn(res.data)
+                    }
+                }).catch(e => {
+                    console.warn(e)
+                })
+            }
         }
     }
 }

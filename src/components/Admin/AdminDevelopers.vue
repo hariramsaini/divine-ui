@@ -6,7 +6,7 @@
         <input type="file" multiple accept=".jpg,.jpeg,.png" name="image" id="file-field-developers"
             @change="handleFileUpload" style="display: none;" ref="fileUpload">
     </div>
-    <div class="inner-container" v-on:click="get10thImages" v-on:scrollend="get10thImages"
+    <div class="inner-container" ref="inner-container" v-on:click="get10thImages" v-on:scrollend="get10thImages"
         v-on:touchend="get10thImages">
         <div v-for="(item, index) in section10th" :key="item">
             <img :src="`data:image/png;base64,${item.base64}`" alt="" ref="img" v-on:click="selectFiles(index)">
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import dataTtype from '@/data-types';
 import { deleteFiles, getDashboardFiles, uploadFiles } from '@/services/DmsService';
 
 export default {
@@ -38,6 +39,10 @@ export default {
     },
     beforeMount() {
         this.reload()
+    },
+    mounted() {
+
+        this.setHeight('inner-container')
     },
     methods: {
         reload() {
@@ -171,6 +176,19 @@ export default {
 
         hideNewJobPosting() {
             this.showNewJobPost = false
+        },
+
+        setHeight(param) {
+            const height = dataTtype.screen.height;
+            const width = dataTtype.screen.width;
+            if (width < 1200) {
+                const srcHeight = height - (height * 0.40)
+                this.$refs[param].style.maxHeight = srcHeight + 'px'
+            }
+            if (width >= 1200) {
+                const srcHeight = height - (height * 0.43)
+                this.$refs[param].style.maxHeight = srcHeight + 'px'
+            }
         }
     }
 }
@@ -191,15 +209,15 @@ section {
     margin: 20px;
 }
 
-.inner-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    overflow-y: auto;
-    /* Enable vertical scrolling */
-    max-height: 500px;
-    width: 100%s;
+@media(min-width: 1200px) {
+    .inner-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        overflow-y: auto;
+        width: 100%s;
+    }
 }
 
 @media(max-width: 1200px) {
@@ -210,7 +228,7 @@ section {
         align-items: center;
         overflow-y: auto;
         /* Enable vertical scrolling */
-        max-height: 530px;
+        max-height: 630px;
         width: 100%s;
     }
 }
@@ -238,15 +256,6 @@ section {
 .header button:hover {
     background-color: sandybrown;
     color: black;
-}
-
-.home {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border: 1px solid lightblue;
-    border-radius: 10px;
-    width: 100%;
 }
 
 .btn-upload {

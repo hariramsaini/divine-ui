@@ -6,7 +6,7 @@ const dataTtype = {
     emailRegex : /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     nameRegex : /^[ a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/,
 
-
+    screen : window.screen
 }
 
 export default dataTtype;

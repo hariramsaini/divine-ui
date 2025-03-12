@@ -2,7 +2,6 @@
     <div class="container">
         <TabWrapper>
             <tab title="Home" class="home">
-
                 <TabWrapper>
                     <tab title="Result" class="result">
                         <Results></Results>
@@ -12,19 +11,20 @@
                     </tab>
                 </TabWrapper>
             </tab>
-            <tab title="Careers">
+            <tab title="Careers" class="home">
                 <Div class="careers">
-                    <button @click="showNewJobPost = !showNewJobPost" v-show="!showNewJobPost">Post New Job</button>
+                    <button @click="hideNewJobPosting('newJob')" v-show="showNewJobPostBtn">Post New
+                        Job</button>
                     <div>
-                        <component :is="JobsListed" v-if="!showNewJobPost" :funHideNewPostButton="hideNewJobPosting">
+                        <component :is="JobsListed" v-if="showJobsListed" :funHideNewPostButton="hideNewJobPosting">
                         </component>
                     </div>
                     <div>
-                        <JobListing :fun="hideNewJobPosting" v-show="showNewJobPost"></JobListing>
+                        <JobListing :fun="hideNewJobPosting" v-show="showCreateNewJob"></JobListing>
                     </div>
                 </Div>
             </tab>
-            <tab title="Developers">
+            <tab title="Developers" class="home">
                 <component :is="AdminDevelopers" v-if="true"></component>
             </tab>
         </TabWrapper>
@@ -49,15 +49,24 @@ export default {
     },
     data() {
         return {
-            showNewJobPost: false,
+            showNewJobPostBtn: true,
+            showJobsListed: true,
+            showCreateNewJob: false,
             SpecialBenefits: '',
             JobsListed: '',
             AdminDevelopers: ''
         }
     },
     methods: {
-        hideNewJobPosting() {
-            this.showNewJobPost = !this.showNewJobPost
+        hideNewJobPosting(param) {
+            this.showNewJobPostBtn = !this.showNewJobPostBtn
+            if (param == 'newJob') {
+                console.warn('param section')
+                this.showJobsListed = !this.showJobsListed
+                this.showCreateNewJob = !this.showCreateNewJob
+            }
+
+
         }
     },
     created() {
@@ -118,11 +127,13 @@ section {
 
 .home {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
     border: 1px solid lightblue;
     border-radius: 10px;
     width: 100%;
+    padding: 10px;
+    margin: 10px;
+    margin-left: 0;
 }
 
 .btn-upload {
