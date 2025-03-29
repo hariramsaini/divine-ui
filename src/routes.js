@@ -14,6 +14,7 @@ import TermsConditions from './components/Terms&Conditions.vue';
 import RefunPolicy from './components/RefunPolicy.vue';
 import ContactUsComp from './components/ContactUsComp.vue';
 import JobListingUpdate from './components/Admin/JobListingUpdate.vue';
+import Admission from './components/Admission.vue';
 
 const routes = [
     {
@@ -29,6 +30,11 @@ const routes = [
                 next();
             }
         }
+    },
+    {
+        name: 'Admission',
+        path: '/admission',
+        component: Admission
     },
     {
         name: 'Careers',

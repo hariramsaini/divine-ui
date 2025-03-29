@@ -14,6 +14,7 @@
             </div>
             <div class="menu">
                 <router-link to="/" class="link"><i class="fa fa-fw fa-home"></i>Home</router-link>
+                <router-link to="/admission" class="link"><i class="fa fa-th-large" aria-hidden="true"></i>New Admission</router-link>
                 <router-link to="/careers"><i class="fa fa-graduation-cap" aria-hidden="true"></i>Careers</router-link>
                 <router-link to="/developers" class="link"><i class="fa fa-fw fa-users"></i>Developers</router-link>
                 <router-link to="/student" class="link"><i class="fa fa-fw fa-user"></i>Student</router-link>
@@ -24,6 +25,7 @@
                 <div class="close-button"><i class="fa fa-window-close" aria-hidden="true"
                         @click="mobileMenu = !mobileMenu"></i></div>
                 <router-link to="/" class="link"><i class="fa fa-fw fa-home"></i>Home</router-link>
+                <router-link to="/admission" class="link"><i class="fa fa-th-large" aria-hidden="true"></i>New Admission</router-link>
                 <router-link to="/careers"><i class="fa fa-graduation-cap" aria-hidden="true"></i>Careers</router-link>
                 <router-link to="/developers" class="link"><i class="fa fa-fw fa-users"></i>Developers</router-link>
                 <router-link to="/student" class="link"><i class="fa fa-fw fa-user"></i>Student</router-link>
@@ -167,7 +169,7 @@ export default {
     }
 
     .header {
-        height: 70px;
+        height: 50px;
     }
 
     .text h1 {

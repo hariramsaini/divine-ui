@@ -140,7 +140,7 @@
         </div>
         <div class="middle"></div>
         <div class="right">
-            <ContactUs />
+            <ContactUs title="Contact Us"/>
         </div>
     </div>
     <div class="right-desk">

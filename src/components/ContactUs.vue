@@ -1,6 +1,6 @@
 <template>
     <div v-if="show" class="cu-main">
-        <h1>Contact Us</h1>
+        <h1>{{ title }}</h1>
         <input type="text" placeholder="Enter Student Name" ref="sName" v-model="details.studentName">
         <input type="text" placeholder="Father's Name" ref="fName" v-model="details.fatherName">
         <select name="class" id="class" ref="class" v-model="details.studentClass">
@@ -28,6 +28,9 @@ import { getLookupByTypeName } from '@/services/LookupService';
 
 export default {
     name: 'ContactUs',
+    props: {
+        title: String
+    },
     data() {
         return {
             details: {

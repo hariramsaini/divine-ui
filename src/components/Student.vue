@@ -8,7 +8,7 @@
         <div class="right">
             <Login :signin="signin" />
             <div class="links">
-                <router-link to="/studentsignup">New Student</router-link>
+                <!-- <router-link to="/studentsignup">New Student</router-link> -->
                 <router-link to="/studentsignup">Forgot Password?</router-link>
             </div>
             <p class="error" v-if="error != ''">{{ error }}</p>
