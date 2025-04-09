@@ -40,7 +40,7 @@
 
             <div class="right">
                 <div class="p-pic">
-                    <img src="../assets/passportpic.jpg" alt="profile-pic" style="width: 100px;">
+                    <img src="" alt="profile-pic" style="width: 100px;">
                 </div>
             </div>
         </div>

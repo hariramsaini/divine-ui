@@ -1,12 +1,17 @@
 
 const dataTtype = {
-    base_url : 'https://apigateway.divineacademy.link',
+    base_url: 'https://apigateway.divineacademy.link',
     //base_url: 'http://localhost:9001',
 
-    emailRegex : /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-    nameRegex : /^[ a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/,
+    emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    nameRegex: /^[ a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/,
 
-    screen : window.screen
+    screen: window.screen
 }
 
 export default dataTtype;
+
+
+export function scrollToTop() {
+    this.$refs.main.scrollIntoView({ behavior: 'smooth' });
+}

@@ -1,5 +1,8 @@
 <template>
     <HeaderComp></HeaderComp>
+    <div ref="main">
+
+    </div>
     <div class="main">
         <div style="height: 5px;"></div>
         <div class="left">
@@ -140,7 +143,7 @@
         </div>
         <div class="middle"></div>
         <div class="right">
-            <ContactUs title="Contact Us"/>
+            <ContactUs title="Contact Us" />
         </div>
     </div>
     <div class="right-desk">
@@ -153,6 +156,7 @@ import { getFiles } from '@/services/DmsService';
 import ContactUs from './ContactUs.vue';
 import HeaderComp from './Header.vue';
 import Slider from './Slider.vue';
+import { useHead } from '@vueuse/head';
 
 export default {
     name: 'HomeComp',
@@ -191,8 +195,25 @@ export default {
             ]
         }
     },
+    setup() {
+        useHead({
+            //Can be static or computed
+            title: `Home | Divine English Academy Radhakishanpura`,
+            meta: [
+                {
+                    name: `description`,
+                    content: 'Meet the Talented Student Developers Behind Divine English Academy\'s Web Application Discover the brilliant minds of Divine Academy who brought our web application to life. Learn about our dedicated student developers, their skills, and the innovative projects they\'ve worked on. Celebrate their achievements and explore the future leaders in technology and education.',
+
+                },
+
+            ]
+        })
+    },
     beforeMount() {
         this.reload()
+    },
+    mounted() {
+        this.scrollToTop()
     },
     methods: {
         reload() {
@@ -260,6 +281,9 @@ export default {
             if (this.benefitsPageNo < this.benefitsTotalPages || this.benefitsPageNo == 1) {
                 this.benefitsPageNo++;
             }
+        },
+        scrollToTop() {
+            this.$refs.main.scrollIntoView({ behavior: 'smooth' });
         }
     }
 }

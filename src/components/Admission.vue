@@ -1,5 +1,8 @@
 <template>
   <Header></Header>
+  <div ref="main">
+
+  </div>
   <div class="ad-level-1">
     <div v-if="show" class="cu-main">
       <h1>Admission Form</h1>
@@ -29,6 +32,7 @@
 import { createAdmissionEnquiry } from '@/services/DivineService';
 import { getLookupByTypeName } from '@/services/LookupService';
 import Header from './Header.vue';
+import { useHead } from '@vueuse/head';
 
 export default {
   name: 'ContactUs',
@@ -61,6 +65,23 @@ export default {
         }
       ]
     }
+  },
+  setup() {
+    useHead({
+      //Can be static or computed
+      title: `New Admission | Divine English Academy Radhakishanpura | Apply for Admission`,
+      meta: [
+        {
+          name: `description`,
+          content: 'New Admission for Session 2025-26',
+
+        },
+
+      ]
+    })
+  },
+  mounted(){
+    this.scrollToTop()
   },
   methods: {
     submitEnquiry() {
@@ -124,6 +145,9 @@ export default {
         }, 10000);
       }
     },
+    scrollToTop() {
+      this.$refs.main.scrollIntoView({ behavior: 'smooth' });
+    }
   },
 
   watch: {

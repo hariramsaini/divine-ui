@@ -1,5 +1,8 @@
 <template>
     <Header></Header>
+    <div ref="main">
+
+    </div>
     <div class="career-container">
         <div class="career-header">
             <h1>Job Opennings</h1>
@@ -42,7 +45,7 @@ export default {
     setup() {
         useHead({
             //Can be static or computed
-            title: `Job Openings At | Divine English Academy Radhakishanpura`,
+            title: `Job Openings At | Divine English Academy Radhakishanpura | Jobs in Sikar`,
             meta: [
                 {
                     name: `description`,
@@ -55,6 +58,7 @@ export default {
     },
     mounted() {
         this.getListedJobs()
+        this.scrollToTop()
     },
     methods: {
         getListedJobs() {
@@ -92,6 +96,9 @@ export default {
                 this.pageNo++;
             }
         },
+        scrollToTop() {
+            this.$refs.main.scrollIntoView({ behavior: 'smooth' });
+        }
     }
 }
 </script>

@@ -1,5 +1,8 @@
 <template>
     <HeaderComp></HeaderComp>
+    <div ref="main">
+
+    </div>
     <div class="main">
         <section class="left">
             <span>
@@ -60,6 +63,9 @@ export default {
     beforeMount() {
         this.getDevelopersImages()
     },
+    mounted() {
+        this.scrollToTop()
+    },
     methods: {
 
         reload() {
@@ -96,6 +102,9 @@ export default {
             if (this.pageNo < this.totalPages || this.pageNo == 1) {
                 this.pageNo++;
             }
+        },
+        scrollToTop() {
+            this.$refs.main.scrollIntoView({ behavior: 'smooth' });
         }
     },
     setup() {

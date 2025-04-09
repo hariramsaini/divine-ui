@@ -1,5 +1,8 @@
 <template>
     <HeaderComp></HeaderComp>
+    <div ref="main">
+
+    </div>
     <div class="student-container">
         <div class="left">
             <h1>Welcome to student portal...</h1>
@@ -28,6 +31,9 @@ export default {
         HeaderComp,
         Login
     },
+    mounted() {
+        this.scrollToTop()
+    },
     data() {
         return {
             error: ''
@@ -50,6 +56,9 @@ export default {
                 this.error = result.data.message
                 setTimeout(() => { this.error = '' }, 5000)
             }
+        },
+        scrollToTop() {
+            this.$refs.main.scrollIntoView({ behavior: 'smooth' });
         }
     },
     setup() {

@@ -24,7 +24,7 @@ export default {
   },
   setup() {
     const siteData = reactive({
-      title: 'Divine English Academy Radhakishanpura | Best School in Sikar | Best English Medium | School in Sikar',
+      title: 'Divine English Academy Radhakishanpura | Best School in Sikar | Best English Medium School in Sikar | Divine Academy Sikar | Best Results in Sikar',
       //description: 'Divine Enligh Academy Radhakishanpura, Sikar (Rajasthan). Giving Computer Engineering Training to school Students and this web application is developed by 8th class students.'
       description: 'Welcome to Divine English Academy - Your Gateway to Quality Education Discover Divine English Academy\'s innovative web application, where students, parents, and teachers connect seamlessly. Access academic resources, track progress, and stay updated with the latest school events. Join us in nurturing excellence and fostering a bright future.'
     })

@@ -15,6 +15,9 @@ import RefunPolicy from './components/RefunPolicy.vue';
 import ContactUsComp from './components/ContactUsComp.vue';
 import JobListingUpdate from './components/Admin/JobListingUpdate.vue';
 import Admission from './components/Admission.vue';
+import BootCamp from './components/BootCamp.vue';
+import AdmissionRequirement from './components/AdmissionRequirement.vue';
+import FeeStructure from './components/FeeStructure.vue';
 
 const routes = [
     {
@@ -32,9 +35,24 @@ const routes = [
         }
     },
     {
-        name: 'Admission',
-        path: '/admission',
+        name: 'AdmissionProcess',
+        path: '/admission/process',
         component: Admission
+    },
+    {
+        name: 'AdmissionRequirement',
+        path: '/admission/requirement',
+        component: AdmissionRequirement
+    },
+    {
+        name: 'FeeStructure',
+        path: '/admission/feestructure',
+        component: FeeStructure
+    },
+    {
+        name: 'BootCamp',
+        path: '/bootcamp',
+        component: BootCamp
     },
     {
         name: 'Careers',
