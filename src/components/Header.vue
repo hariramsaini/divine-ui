@@ -149,6 +149,10 @@ export default {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     padding: 10px;
+
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
 .nav-item {

@@ -6,12 +6,12 @@
         </div>
         <div class="logo">
             <div class="fb-logo">
-                <a href="https://www.facebook.com/divinesikar/" target="_blank">
+                <a href="https://facebook.com/divinesikar/" target="_blank">
                     <img src="../assets/fb.png" alt="" style="width: 30px;">
                 </a>
             </div>
             <div class="insta-logo">
-                <a href="https://www.instagram.com/divineschoolsikar/reels/" target="_blank">
+                <a href="https://instagram.com/divineschoolsikar/reels/" target="_blank">
                     <img src="../assets/instagram.svg" alt="" style="width: 40px;">
                 </a>
             </div>

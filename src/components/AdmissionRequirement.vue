@@ -194,22 +194,22 @@ export default {
                 {
                     title: 'Application',
                     description: 'Complete and submit the application form with required documents',
-                    date: 'Before March 31, 2024'
+                    date: 'Before April 30th, 2025'
                 },
                 {
                     title: 'Assessment',
                     description: 'Student assessment and family interview',
-                    date: 'April 1-15, 2024'
+                    date: 'May 1-15, 2025'
                 },
                 {
                     title: 'Admission Decision',
                     description: 'Notification of admission status',
-                    date: 'April 30, 2024'
+                    date: 'May 28-29, 2025'
                 },
                 {
                     title: 'Enrollment',
                     description: 'Complete enrollment formalities and fee payment',
-                    date: 'May 1-15, 2024'
+                    date: 'June 1-15, 2025'
                 }
             ],
             requirements: [

@@ -135,10 +135,10 @@ export default {
                 { grade: 'Grade 10', admission: 15000, tuition: 15000, activity: 10000, total: 40000 },
             ],
             additionalCharges: [
-                { item: 'Registration Fee', amount: 1000 },
-                { item: 'Uniform Set', amount: 3500 },
-                { item: 'Books & Stationery', amount: 4500 },
-                { item: 'ID Card & Smart Tag', amount: 800 },
+                { item: 'Registration Fee', amount: 1500 },
+                { item: 'Uniform Set', amount: 2500 },
+                { item: 'Books & Stationery', amount: 2500 },
+                { item: 'ID Card & Smart Tag', amount: 500 },
             ],
             specialOffers: [
                 {
@@ -151,8 +151,8 @@ export default {
                 {
                     badge: 'EARLY',
                     title: 'Early Bird Offer',
-                    description: 'Admissions completed before March 31st',
-                    discount: '5% OFF total fees',
+                    description: 'Admissions completed before June 15',
+                    discount: '10% OFF total fees',
                     color: '#2196F3'
                 },
                 {

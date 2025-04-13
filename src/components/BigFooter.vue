@@ -4,20 +4,27 @@
             <h4>Divine English Academy</h4>
             <h5>One of Shkahawati's largest educational conglomerates, fostering excellence and shaping success stories
                 across
-                India since 2014.</h5>
+                India since 2010.</h5>
             <div class="privacyPolicy">
-                <router-link to="/privacy-policy" class="link" target="_blank">Privacy Policy</router-link>
+                <div class="bigfooter-links">
+                    <router-link to="/privacy-policy" class="link" target="_blank">Privacy Policy</router-link>
+                </div>
                 <a class="bar">|</a>
-                <router-link to="/terms-and-conditions" class="link" target="_blank">Terms & Conditions</router-link>
+                <div class="bigfooter-links">
+                    <router-link to="/terms-and-conditions" class="link" target="_blank">Terms &
+                        Conditions</router-link>
+                </div>
                 <a class="bar">|</a>
-                <router-link to="/refund-policy" class="link" target="_blank">Refund Policy</router-link>
+                <div class="bigfooter-links">
+                    <router-link to="/refund-policy" class="link" target="_blank">Refund Policy</router-link>
+                </div>
             </div>
         </div>
         <div class="footer-level-1">
             <div class="contactUs">
                 <h1>Contact Us</h1>
 
-                <div style="display: flex;align-items: baseline;">
+                <div class="contactUs-items">
                     <i class="fa fa-map-marker i-button" aria-hidden="true" @click="openApp('', 'map')"> </i>
                     <div>
                         <p>Radhakishan Pura,</p>
@@ -26,15 +33,15 @@
                     </div>
                 </div>
 
-                <div style="display: flex;align-items: baseline;">
+                <div class="contactUs-items">
                     <i class="fa fa-phone i-button" aria-hidden="true" @click="openApp('+91-9928580651', 'phone')"></i>
                     <div>
                         <p>+91-9928580651</p>
                     </div>
                 </div>
 
-                <div style="display: flex;align-items: baseline;">
-                    <i class="fa fa-envelope-o i-button" aria-hidden="true"
+                <div class="contactUs-items">
+                    <i class="fa fa-envelope" aria-hidden="true"
                         @click="openApp('info@divineacademy.link', 'mail')"></i>
                     <p>info@divineacademy.link</p>
                 </div>
@@ -43,14 +50,30 @@
             <div class="quickLinks">
                 <h1>Quick Links</h1>
                 <div style="display: flex; flex-direction: column;">
-                    <router-link to="/contactus" class="link" target="_blank"><i class="fa fa-fw fa-users"></i>Contact
-                        Us</router-link>
-                    <router-link to="/careers" target="_blank"><i class="fa fa-graduation-cap"
-                            aria-hidden="true"></i>Careers</router-link>
-                    <router-link to="/developers" class="link" target="_blank"><i
-                            class="fa fa-fw fa-users"></i>Developers</router-link>
-                    <router-link to="/student" class="link" target="_blank"><i
-                            class="fa fa-fw fa-user"></i>Student</router-link>
+                    <div class="contactUs-items">
+                        <router-link to="/bootcamp" class="link" target="_blank"><i class="fa fa-laptop"
+                                aria-hidden="true"></i>Coding Bootcamp</router-link>
+                    </div>
+                    <div class="contactUs-items">
+                        <router-link to="/admission/requirement" class="link" target="_blank">
+                            <i class="fas fa-user-plus"></i>New Admission</router-link>
+                    </div>
+
+                    <div class="contactUs-items">
+                        <router-link to="/careers" target="_blank"><i class="fa fa-graduation-cap"
+                                aria-hidden="true"></i>Careers</router-link>
+                    </div>
+
+                    <div class="contactUs-items">
+                        <router-link to="/developers" class="link" target="_blank"><i
+                                class="fa fa-fw fa-users"></i>Developers</router-link>
+                    </div>
+
+                    <div class="contactUs-items">
+                        <router-link to="/student" class="link" target="_blank"><i
+                                class="fa fa-fw fa-user"></i>Student</router-link>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -76,7 +99,7 @@ export default {
             }
             if (type == 'map') {
                 const a = document.createElement('a')
-                a.href  = "https://www.google.com/maps/place/Divine+English+Academy,+Radhakishanpura+Sikar/@27.6091207,75.1608197,17z/data=!4m15!1m8!3m7!1s0x396cbb37dc1d8643:0x91151b0cc6679b3d!2sDivine+English+Academy,+Radhakishanpura+Sikar!8m2!3d27.6091207!4d75.1633946!10e1!16s%2Fg%2F11d_1bgdq2!3m5!1s0x396cbb37dc1d8643:0x91151b0cc6679b3d!8m2!3d27.6091207!4d75.1633946!16s%2Fg%2F11d_1bgdq2?entry=ttu&g_ep=EgoyMDI1MDIyNS4wIKXMDSoASAFQAw%3D%3D"
+                a.href = "https://www.google.com/maps/place/Divine+English+Academy,+Radhakishanpura+Sikar/@27.6091207,75.1608197,17z/data=!4m15!1m8!3m7!1s0x396cbb37dc1d8643:0x91151b0cc6679b3d!2sDivine+English+Academy,+Radhakishanpura+Sikar!8m2!3d27.6091207!4d75.1633946!10e1!16s%2Fg%2F11d_1bgdq2!3m5!1s0x396cbb37dc1d8643:0x91151b0cc6679b3d!8m2!3d27.6091207!4d75.1633946!16s%2Fg%2F11d_1bgdq2?entry=ttu&g_ep=EgoyMDI1MDIyNS4wIKXMDSoASAFQAw%3D%3D"
                 a.target = '_blank'
                 a.click()
             }
@@ -138,10 +161,37 @@ export function hide() {
         font-size: x-large;
     }
 
-    .privacyPolicy {}
+    .privacyPolicy {
+        display: flex;
+    }
 
     .privacyPolicy .bar {
         color: #FF6000;
+    }
+
+    .bigfooter-links:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        padding: 2px;
+
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .contactUs-items {
+        display: flex;
+        align-items: baseline;
+    }
+
+    .contactUs-items:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+        padding: 2px;
+
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
     }
 }
 
@@ -239,7 +289,7 @@ i {
     margin-top: 10px;
 }
 
-.i-button{
+.i-button {
     cursor: pointer;
 }
 </style>
